@@ -1,0 +1,29 @@
+﻿@model DashboardMaker.Models.DataSource;
+
+<form method="Post">
+	<div>
+		<label asp-for="@Model.Host">Host</label>
+		<input asp-for="@Model.Host" type="text" />
+	</div>
+	<div>
+		<label asp-for="@Model.Port">Port</label>
+		<input asp-for="@Model.Port" type="text" />
+	</div>
+	<div>
+		<label asp-for="@Model.UserName">Username</label>
+		<input asp-for="@Model.UserName" type="text" />
+	</div>
+	<div>
+		<label asp-for="@Model.Password">Password</label>
+		<input asp-for="@Model.Password" type="text" />
+	</div>
+	<div>
+		<label asp-for="@Model.DatabaseName">Database Name</label>
+		<input asp-for="@Model.DatabaseName" type="text" />
+	</div>
+	<div>
+		<label asp-for="@Model.TableName">Table Name</label>
+		<input asp-for="@Model.TableName" type="text" />
+	</div>
+	<input type="submit" Done/>
+</form>
