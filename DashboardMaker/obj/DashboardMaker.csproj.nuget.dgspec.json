@@ -71,6 +71,14 @@
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.2.7, )"
+            },
+            "SqlKata": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "SqlKata.Execution": {
+              "target": "Package",
+              "version": "[2.4.0, )"
             }
           },
           "imports": [

@@ -407,3 +407,6 @@ C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\obj\Debug\net7.0\refin
 C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\obj\Debug\net7.0\DashboardMaker.pdb
 C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\obj\Debug\net7.0\DashboardMaker.genruntimeconfig.cache
 C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\obj\Debug\net7.0\ref\DashboardMaker.dll
+C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\bin\Debug\net7.0\Dapper.dll
+C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\bin\Debug\net7.0\SqlKata.dll
+C:\Users\Admin\source\repos\DashboardMaker\DashboardMaker\bin\Debug\net7.0\SqlKata.Execution.dll

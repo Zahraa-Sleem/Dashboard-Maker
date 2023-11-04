@@ -4,6 +4,7 @@ using DashboardMaker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DashboardMaker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231104064745_AddedUserModel")]
+    partial class AddedUserModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,118 +24,6 @@ namespace DashboardMaker.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DashboardMaker.Models.Color", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<float?>("Alpha")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("Blue")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ColorPaletteId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Green")
-                        .HasColumnType("int");
-
-                    b.Property<string>("HexCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("Red")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorPaletteId");
-
-                    b.ToTable("Colors");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.ColorPalette", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ColorPalettes");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.Dashboard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Dashboards");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.DataSource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ConnectionString")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DataSourceType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("FileData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SourceName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TableName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DataSources");
-                });
 
             modelBuilder.Entity("DashboardMaker.Models.User", b =>
                 {
@@ -164,62 +55,6 @@ namespace DashboardMaker.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.Visualization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ColorPaletteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DashboardId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DataSourceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("VisualizationTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorPaletteId");
-
-                    b.HasIndex("DashboardId");
-
-                    b.HasIndex("DataSourceId");
-
-                    b.HasIndex("VisualizationTypeId");
-
-                    b.ToTable("Visualization");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.VisualizationType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VisualizationTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -424,59 +259,6 @@ namespace DashboardMaker.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DashboardMaker.Models.Color", b =>
-                {
-                    b.HasOne("DashboardMaker.Models.ColorPalette", null)
-                        .WithMany("Colors")
-                        .HasForeignKey("ColorPaletteId");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.Dashboard", b =>
-                {
-                    b.HasOne("DashboardMaker.Models.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.Visualization", b =>
-                {
-                    b.HasOne("DashboardMaker.Models.ColorPalette", "ColorPalette")
-                        .WithMany()
-                        .HasForeignKey("ColorPaletteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DashboardMaker.Models.Dashboard", "Dashboard")
-                        .WithMany()
-                        .HasForeignKey("DashboardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DashboardMaker.Models.DataSource", "DataSource")
-                        .WithMany()
-                        .HasForeignKey("DataSourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DashboardMaker.Models.VisualizationType", "VisualizationType")
-                        .WithMany()
-                        .HasForeignKey("VisualizationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ColorPalette");
-
-                    b.Navigation("Dashboard");
-
-                    b.Navigation("DataSource");
-
-                    b.Navigation("VisualizationType");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -526,11 +308,6 @@ namespace DashboardMaker.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DashboardMaker.Models.ColorPalette", b =>
-                {
-                    b.Navigation("Colors");
                 });
 #pragma warning restore 612, 618
         }
