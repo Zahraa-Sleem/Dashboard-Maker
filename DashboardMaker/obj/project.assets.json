@@ -5023,11 +5023,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\DashboardMaker\\DashboardMaker\\DashboardMaker.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\DashboardMaker.csproj",
       "projectName": "DashboardMaker",
-      "projectPath": "C:\\Users\\Admin\\source\\repos\\DashboardMaker\\DashboardMaker\\DashboardMaker.csproj",
+      "projectPath": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\DashboardMaker.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\source\\repos\\DashboardMaker\\DashboardMaker\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

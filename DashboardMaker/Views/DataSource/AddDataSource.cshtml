@@ -1,30 +1,217 @@
-﻿@*@model DashboardMaker.Models.DataSource;
+﻿@model DashboardMaker.Models.DataSource;
 
-<form method="Post">
-	<div>
-		<label asp-for="@Model.Host">Host</label>
-		<input asp-for="@Model.Host" type="text" />
-	</div>
-	<div>
-		<label asp-for="@Model.Port">Port</label>
-		<input asp-for="@Model.Port" type="text" />
-	</div>
-	<div>
-		<label asp-for="@Model.UserName">Username</label>
-		<input asp-for="@Model.UserName" type="text" />
-	</div>
-	<div>
-		<label asp-for="@Model.Password">Password</label>
-		<input asp-for="@Model.Password" type="text" />
-	</div>
-	<div>
-		<label asp-for="@Model.DatabaseName">Database Name</label>
-		<input asp-for="@Model.DatabaseName" type="text" />
-	</div>
-	<div>
-		<label asp-for="@Model.TableName">Table Name</label>
-		<input asp-for="@Model.TableName" type="text" />
-	</div>
-	<input type="submit" Done/>
-</form>
-*@
+
+<style>
+    body {
+        background-color: #e9ecef;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+        background-color: #343a40;
+        color: #ffffff;
+        padding: 10px; 
+    }
+
+    .container {
+        background-color: #ffffff; 
+        margin-top: 50px;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .form-group label {
+        color: #495057;
+        font-weight: bold; 
+        margin-bottom: 5px; 
+        background-color: #f8f9fa; 
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .form-group .form-check-label {
+        font-weight: normal; 
+        background-color: transparent;
+    }
+
+</style>
+
+<div class="header">
+    <h2>Add Data Source</h2>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="SourceName" class="control-label">Source Name</label>
+                    <input asp-for="SourceName" type="text" class="form-control" />
+                    <span asp-validation-for="SourceName" class="text-danger"></span>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <label asp-for="DataSourceType" class="control-label">Data Source Type</label>
+                    <div class="form-check">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-check-label">
+                                    <input asp-for="DataSourceType" type="radio" value="Excel File" class="form-check-input" />
+                                    Excel File
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-check-label">
+                                    <input asp-for="DataSourceType" type="radio" value="MySQL Database" class="form-check-input database-option" />
+                                    MySQL Database
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-check-label">
+                                    <input asp-for="DataSourceType" type="radio" value="SQL Database" class="form-check-input database-option" />
+                                    SQL Database
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+
+                @* **********  Hidden Inputs    **********  *@
+                <input asp-for="ConnectionString" type="hidden" id="ConnectionString" />
+                <input asp-for="FileName" type="hidden" id="FileName" />
+                <input asp-for="FileData" type="hidden" id="FileData" />
+
+                @* ********* Divs based on selection *******@
+
+                <div id="DatabaseFields" style="display:@(Model.DataSourceType == "MySQL Database" || Model.DataSourceType == "SQL Database" ? "block" : "none")">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="Host">Host</label>
+                            <input id="Host" name="Host" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Port">Port</label>
+                            <input id="Port" name="Port" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="Username">Username</label>
+                            <input id="Username" name="Username" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Password">Password</label>
+                            <input id="Password" name="Password" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="Database">Database Name</label>
+                            <input id="Database" name="Database" type="text" class="form-control" />
+                        </div>
+@*                        <div class="form-group col-md-6">
+                            <label asp-for="TableName">Table Name</label>
+                            <input asp-for="TableName" type="text" class="form-control" />
+                        </div>*@
+                    </div>
+                </div>
+
+                <div id="ExcelFields" style="display:@(Model.DataSourceType == "Excel File" ? "block" : "none")">
+                    <div class="form-group">
+                        <label for="File">File</label>
+                        <input id="File" name="File" type="file" class="form-control" />
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" style="background-color: #343a40;">Save</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".database-option").change(function () {
+            $("#DatabaseFields, #ExcelFields").hide();
+
+            if ($(this).val() === "MySQL Database" || $(this).val() === "SQL Database") {
+                $("#DatabaseFields").show();
+            } else if ($(this).val() === "Excel File") {
+                $("#ExcelFields").show();
+            }
+        });
+
+        // Add an additional event handler for the "Excel File" radio button
+        $("input[value='Excel File']").change(function () {
+            $("#DatabaseFields").hide();
+            $("#ExcelFields").show();
+        });
+
+        // Add event handler for database fields input changes
+        $(".database-option, #Host, #Port, #Username, #Password, #Database").change(function () {
+            updateCredentials();
+        });
+
+        // Function to update hidden input with credentials
+        function updateCredentials() {
+            var host = $("#Host").val();
+            var port = $("#Port").val();
+            var username= $('#Username').val();
+            var password = $('#Password').val();
+            var database = $('#Database').val();
+
+            $("#ConnectionString").val(`Server=${host};User=${username};Password=${password};Database=${database}`);
+        }
+
+        // Add event handler for file input changes
+        $("#File").change(function () {
+            readExcel();
+        });
+
+        function readExcel() {
+            // Get the input element
+            var fileInput = document.getElementById('File');
+
+            // Check if a file is selected
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+                var reader = new FileReader();
+
+                // Read the file as an ArrayBuffer
+                reader.readAsArrayBuffer(file);
+
+                // Handle the file reading process
+                reader.onload = function (event) {
+                    
+                    // Get the ArrayBuffer data
+                    var arrayBuffer = event.target.result;
+
+                    // Convert ArrayBuffer to byte array
+                    var byteArray = new Uint8Array(arrayBuffer);
+
+                    // Use 'byteArray' as needed, for example, send it to the server or process it further
+                    console.log(byteArray);
+                    $("#FileName").val(file.Name);
+                    $("#FileData").val(byteArray);
+                };
+
+                reader.onerror = function (event) {
+                    console.error("File reading error:", event.target.error);
+                };
+            } else {
+                console.error("No file selected");
+            }
+        }
+    });
+</script>
+
+
