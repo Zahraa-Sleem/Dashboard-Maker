@@ -20,6 +20,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/ColorPalette/CreateColorPalette.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JQYWxldHRlXENyZWF0ZUNvbG9yUGFsZXR0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/ColorPalette/EditColorPalette.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JQYWxldHRlXEVkaXRDb2xvclBhbGV0dGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/DataSource/AddDataSource.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVNvdXJjZVxBZGREYXRhU291cmNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

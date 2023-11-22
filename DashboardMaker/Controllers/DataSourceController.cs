@@ -29,7 +29,7 @@ namespace DashboardMaker.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(dataSource.DataSourceType == "MySQL Database")
+                if (dataSource.DataSourceType == "MySQL Database")
                 {
                     try
                     {
@@ -43,13 +43,13 @@ namespace DashboardMaker.Controllers
 
                         return RedirectToAction("Index", "Home");
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         ModelState.AddModelError(string.Empty, $"Error connecting to the database.Make sure the inputs you've added are right.");
                         return View(dataSource);
                     }
                 }
-               else if (dataSource.DataSourceType == "SQL Database")
+                else if (dataSource.DataSourceType == "SQL Database")
                 {
                     try
                     {
@@ -64,7 +64,7 @@ namespace DashboardMaker.Controllers
 
                         return RedirectToAction("Index", "Home");
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         ModelState.AddModelError(string.Empty, $"Error connecting to the database.Make sure the inputs you've added are right.");
                         return View(dataSource);
@@ -72,14 +72,12 @@ namespace DashboardMaker.Controllers
                 }
                 else if (dataSource.DataSourceType == "Excel File")
                 {
-                    Console.WriteLine("*****************************************************" +
-                        "In excel"+
-                       "**************************************");
                     _context.DataSources.Add(dataSource);
                     _context.SaveChanges();
+                    return View(dataSource);
                 }
             }
-            return View("Index","Home");
+            return View("Index", "Home");
         }
     }
 }

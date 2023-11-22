@@ -4,18 +4,13 @@
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public List<Color> Colors { get; set; }
+        public List<string> Colors { get; set; }
 
-        // Constructor to initialize the Colors list
+        // Constructor to initialize the Colors property with default values
         public ColorPalette()
         {
-            Colors = new List<Color>();
-        }
-
-        // Method to add a color to the palette
-        public void AddColor(Color color)
-        {
-            Colors.Add(color);
+            // Consider Red,Green,Blue as the default colors
+            Colors = new List<string> { "#FF0000", "#00FF00", "#0000FF" };
         }
     }
 }

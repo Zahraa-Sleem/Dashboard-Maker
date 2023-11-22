@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Rl57bhsvhl5hrzqBvEiWKfZ8UrqL0vF4hk3o9dlff2k=",
+  "Hash": "l1xpGItunDpaxtF95cdh1r6Nv4RVkGgkqqdgnse3R2k=",
   "Source": "DashboardMaker",
   "BasePath": "_content/DashboardMaker",
   "Mode": "Default",
@@ -1120,6 +1120,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\xlsx.full.min.js",
+      "SourceId": "DashboardMaker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\",
+      "BasePath": "_content/DashboardMaker",
+      "RelativePath": "js/xlsx.full.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\xlsx.full.min.js"
     },
     {
       "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
