@@ -18,6 +18,6 @@ namespace DashboardMaker.Models
         public string? ConnectionString { get; set; }
 
         public string? FileName { get; set; } // File name with extension
-        public byte[]? FileData { get; set; } // Actual file data
+        public string? FileData { get; set; } // Actual file data
     }
 }

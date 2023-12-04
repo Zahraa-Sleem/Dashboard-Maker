@@ -17,7 +17,7 @@
                     @for (int i = 0; i < Model.Colors.Count; i++)
                     {
                         <div class="input-group color-input-group">
-                            <input type="color" name="ColorPalette.Colors[@i]" value="@Model.Colors[i]" class="form-control" />
+                            <input type="color" name="Colors[@i].Value" value="@Model.Colors[i]" class="form-control" />
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-outline-danger deleteColor" data-index="@i">X</button>
                             </div>
@@ -42,7 +42,7 @@
 
             function addColorInput(index, color) {
                 var colorInputGroup = $("<div class='input-group color-input-group'></div>");
-                var newColorInput = $("<input type='color' name='ColorPalette.Colors[" + index + "]' value='" + color + "' class='form-control' />");
+                var newColorInput = $("<input type='color' name='Colors[" + index + "].Value' value='" + color + "' class='form-control' />");
                 var deleteButton = $("<div class='input-group-append'><button type='button' class='btn btn-outline-danger deleteColor' data-index='" + index + "'>X</button></div>");
 
                 colorInputGroup.append(newColorInput);

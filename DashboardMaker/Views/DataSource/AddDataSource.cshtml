@@ -44,7 +44,7 @@
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
-			<form method="post">
+			<form method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label asp-for="SourceName" class="control-label">Source Name</label>
 					<input asp-for="SourceName" type="text" class="form-control" />
@@ -174,40 +174,35 @@
 		$("#File").change(function () {
 			readExcel();
 		});
-
-
 		function readExcel() {
 			var fileInput = document.getElementById('File');
+			var file = fileInput.files[0];
 
-			if (fileInput.files.length > 0) {
-				const file = fileInput.files[0];
-
-				const reader = new FileReader();
+			if (file) {
+				var reader = new FileReader();
 
 				reader.onload = function (e) {
-					const data = new Uint8Array(e.target.result);
-					processExcel(data);
+					// Read the Excel file
+					var data = new Uint8Array(e.target.result);
+					var workbook = XLSX.read(data, { type: 'array' });
+
+					$("#FileName").val(file.name)
+
+					// Assume the first sheet is the one you want to convert
+					var sheetName = workbook.SheetNames[0];
+					var excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+					// Display the JSON data (you can customize this part)
+					console.log('Excel Data:', excelData);
+
+					// Convert JSON data to string and update the hidden input
+					var jsonData = JSON.stringify(excelData);
+					$("#FileData").val(jsonData);
 				};
 
 				reader.readAsArrayBuffer(file);
-			} else {
-				alert('Please select an Excel file.');
 			}
 		}
-
-			function processExcel(data) {
-				const workbook = XLSX.read(data, { type: 'array' });
-				const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-				const excelData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-				const text = JSON.stringify(excelData);
-				const encoder = new TextEncoder();
-				const uint8Array = encoder.encode(text);
-
-				document.getElementById('FileData').value = uint8Array.toString();
-				console.log(document.getElementById('FileData').value);
-			}
 	});
 </script>
 
