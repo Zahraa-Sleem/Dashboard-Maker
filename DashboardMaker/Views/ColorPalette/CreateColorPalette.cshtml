@@ -3,9 +3,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form method="post" asp-action="EditColorPalette">
-                @Html.HiddenFor(model => model.Id)
-
+            <form method="post" asp-action="CreateColorPalette">
                 <div class="form-group">
                     <label asp-for="Name" class="control-label">Color Palette Name</label>
                     <input asp-for="Name" type="text" class="form-control" />
@@ -14,23 +12,20 @@
 
                 <div class="form-group" id="colorInputs">
                     <label for="Colors">Colors</label>
-                    @for (int i = 0; i < Model.Colors.Count; i++)
-                    {
-                        <div class="input-group color-input-group">
-                            <label for="Model.Colors[@i].HexadecimalValue" class="sr-only">Color @i</label>
-                            <input type="color" name="Model.Colors[@i].hexadecimalValue" value="@Model.Colors[i].hexadecimalValue" class="form-control" />
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-outline-danger deleteColor" data-index="@i">X</button>
-                            </div>
+                    <div class="input-group color-input-group">
+                        <label for="Colors[0].HexadecimalValue" class="sr-only">Color 0</label>
+                        <input type="color" name="Colors[0].HexadecimalValue" value="#000000" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-danger deleteColor" data-index="0">X</button>
                         </div>
-                    }
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <button type="button" id="addColor" class="btn btn-success">Add Color</button>
                 </div>
 
-                <button type="submit" class="btn btn-dark">Save Changes</button>
+                <button type="submit" class="btn btn-dark">Create Color Palette</button>
             </form>
         </div>
     </div>
@@ -39,11 +34,11 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            var colorIndex = @Model.Colors.Count;
+            var colorIndex = 1; // Start with 1 because there's already one color input
 
             function addColorInput(index, color) {
                 var colorInputGroup = $("<div class='input-group color-input-group'></div>");
-                var newColorInput = $("<input type='color' name='Model.Colors[" + index + "].hexadecimalValue' value='" + color + "' class='form-control' />");
+                var newColorInput = $("<input type='color' name='Colors[" + index + "].HexadecimalValue' value='" + color + "' class='form-control' />");
                 var deleteButton = $("<div class='input-group-append'><button type='button' class='btn btn-outline-danger deleteColor' data-index='" + index + "'>X</button></div>");
 
                 colorInputGroup.append(newColorInput);
@@ -61,7 +56,7 @@
             $("#colorInputs").on("click", ".deleteColor", function () {
                 // Remove the color input and the associated delete button
                 $(this).closest(".color-input-group").remove();
-                colorIndex = Math.max(colorIndex - 1, 0);
+                colorIndex = Math.max(colorIndex - 1, 1); // Ensure colorIndex doesn't go below 1
             });
         });
     </script>

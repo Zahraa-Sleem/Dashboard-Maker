@@ -19,16 +19,41 @@ namespace DashboardMaker.Controllers
         }
 
         [HttpGet]
+        public IActionResult Index()
+        {
+            var dataSources = _context.DataSources.ToList();
+            return View(dataSources);
+        }
+
+
+        [HttpGet]
         public async Task<IActionResult> AddDataSource()
         {
-            return View(new DataSource());
+            return View("DataSourceForm", new DataSource());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateDataSource(int id)
+        {
+            var datasource = _context.DataSources.Find(id);
+
+            if (datasource == null) { return NotFound(); }
+
+            return View("DataSourceForm", datasource);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDataSource(DataSource dataSource)
+        public async Task<IActionResult> Save(DataSource dataSource)
         {
-            if (ModelState.IsValid)
+            //Checking the model validity before action
+            if (!ModelState.IsValid)
             {
+                return View("DataSourceForm", dataSource);
+            }
+            //checking if the data source is new or old
+            if (dataSource.Id == 0)
+            {
+                //data source is new
                 if (dataSource.DataSourceType == "MySQL Database")
                 {
                     try
@@ -46,7 +71,7 @@ namespace DashboardMaker.Controllers
                     catch
                     {
                         ModelState.AddModelError(string.Empty, $"Error connecting to the database.Make sure the inputs you've added are right.");
-                        return View(dataSource);
+                        return View("DataSourceForm", dataSource);
                     }
                 }
                 else if (dataSource.DataSourceType == "SQL Database")
@@ -67,17 +92,34 @@ namespace DashboardMaker.Controllers
                     catch
                     {
                         ModelState.AddModelError(string.Empty, $"Error connecting to the database.Make sure the inputs you've added are right.");
-                        return View(dataSource);
+                        return View("DataSourceForm", dataSource);
                     }
                 }
                 else if (dataSource.DataSourceType == "Excel File")
                 {
                     _context.DataSources.Add(dataSource);
                     _context.SaveChanges();
-                    return View(dataSource);
+                    return View("DataSourceForm", dataSource);
                 }
             }
-            return View("Index", "Home");
+            else
+            {
+                //fetch the datasource from the database
+                var dataSourceInDb = _context.DataSources.Find(dataSource.Id);
+
+                //if found edit the data
+                if (dataSourceInDb != null)
+                {
+                    _context.DataSources.Update(dataSource);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
+

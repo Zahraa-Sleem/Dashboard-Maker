@@ -10,9 +10,5 @@ namespace DashboardMaker.Models
         [StringLength(100, ErrorMessage = "Title cannot exceed 100 characters")]
         [Display(Name = "Dashboard Title")]
         public string Title { get; set; }
-        public int UserId { get; set; }
-
-        [Display(Name = "Owner")]
-        public User Owner { get; set; }
     }
 }

@@ -1,0 +1,30 @@
+﻿@model List<DashboardMaker.Models.DataSource>
+
+@{
+    ViewData["Title"] = "DataSources";
+}
+
+<h1>Data Sources</h1>
+
+<p>
+    <a asp-action="AddDataSource" class="btn btn-primary">New</a>
+</p>
+<table id="datasources" class="table">
+    <thead>
+        <tr>
+            <th>Data Source Name</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataSource dataSource in Model)
+        {
+            <tr>
+                <td>@dataSource.SourceName</td>
+                <td>@dataSource.DataSourceType</td>
+                <td><a asp-action="UpdateDataSource" asp-route-id="@dataSource.Id">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

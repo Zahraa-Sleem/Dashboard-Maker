@@ -37,14 +37,25 @@
 
 </style>
 
-<div class="header">
-	<h2>Add Data Source</h2>
-</div>
+@if (Model != null && Model.Id != 0)
+{
+	<div class="header">
+		<h4>Edit Data Source</h4>
+	</div>
+    
+}
+else
+{
+	<div class="header">
+		<h4>Add Data Source</h4>
+	</div>
+}
+
 
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
-			<form method="post" enctype="multipart/form-data">
+			<form asp-action="Save" asp-controller="DataSource" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label asp-for="SourceName" class="control-label">Source Name</label>
 					<input asp-for="SourceName" type="text" class="form-control" />
@@ -80,6 +91,7 @@
 				</div>
 
 				@* **********  Hidden Inputs    **********  *@
+				<input asp-for="Id" type="hidden"/>
 				<input asp-for="ConnectionString" type="hidden" id="ConnectionString" />
 				<input asp-for="FileName" type="hidden" id="FileName" />
 				<input asp-for="FileData" type="hidden" id="FileData" />
