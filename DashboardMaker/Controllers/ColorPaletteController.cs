@@ -2,6 +2,7 @@
 using DashboardMaker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace DashboardMaker.Controllers
@@ -16,67 +17,55 @@ namespace DashboardMaker.Controllers
             _context = context;
         }
 
-        [HttpPost("CreateColorPalette")]
-        public async Task<IActionResult> CreateColorPalette(ColorPalette colorPalette)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.ColorPalettes.Add(colorPalette);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View(colorPalette);
-        }
-
         [HttpGet("Create")]
         public IActionResult CreateColorPalette()
         {
-            return View(new ColorPalette());
+            return View("ColorPaletteForm",new ColorPalette());
         }
 
-        
-
-        [HttpGet("Edit/{id?}")]
-        public async Task<IActionResult> EditColorPalette(int? id)
+        [HttpGet("Edit/{id}")]
+        public IActionResult UpdateColorPalette(int id)
         {
-            if (id == null)
-            {
-                return View(new ColorPalette());
-            }
+            var colorPalette = _context.ColorPalettes.Find(id);
 
-            var colorPalette = await _context.ColorPalettes
-                .Include(cp => cp.Colors)
-                .FirstOrDefaultAsync(cp => cp.Id == id);
+            if (colorPalette == null) { return NotFound(); }
 
-            if (colorPalette == null)
-            {
-                return NotFound();
-            }
-
-            return View(colorPalette);
+            return View("ColorPaletteForm", colorPalette);
         }
 
-        [HttpPost("EditColorPalette")]
-        public async Task<IActionResult> EditColorPalette(ColorPalette colorPalette)
+        [HttpPost("Save")]
+        public async Task<IActionResult> Save(ColorPalette colorPalette)
         {
-            if (ModelState.IsValid)
+            //colorPalette.Colors = JsonConvert.DeserializeObject<ICollection<Color>>(colorPalette.Colors);
+
+            //Checking the model validity before action
+            if (!ModelState.IsValid)
             {
-                if (colorPalette.Id == 0)
+                return View("ColorPaletteForm", colorPalette);
+            }
+
+            if(colorPalette.Id == 0)
+            {
+                _context.ColorPalettes.Add(colorPalette);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                //fetch the color palette from the database
+                var colorPaletteInDb = _context.ColorPalettes.Find(colorPalette.Id);
+
+                //if found edit the data
+                if (colorPaletteInDb != null)
                 {
-                    _context.ColorPalettes.Add(colorPalette);
+                    _context.ColorPalettes.Update(colorPalette);
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
-                    _context.ColorPalettes.Update(colorPalette);
+                    return NotFound();
                 }
-
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home"); // Replace with the appropriate action and controller
             }
-
-            return View(colorPalette);
+            return View("ColorPaletteForm", colorPalette);
         }
     }
 }

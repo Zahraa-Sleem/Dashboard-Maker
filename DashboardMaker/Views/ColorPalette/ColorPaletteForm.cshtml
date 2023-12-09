@@ -1,0 +1,211 @@
+﻿@model DashboardMaker.Models.ColorPalette
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Color Palette Name</label>
+                    <input asp-for="Name" type="text" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" id="colorInputs">
+                    <label for="Colors">Colors</label>
+                    <div id="colors">
+                        <div class="input-group color-input-group">
+                            <input type="color" name="Colors[0].HexadecimalValue" value="#000000" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-danger deleteColor" data-index="0">X</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <button type="button" id="addColor" class="btn btn-success">Add Color</button>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <button type="submit" class="btn btn-dark" id="save">Save</button>
+                    </div>
+                </div>
+
+                @* **********  Hidden Inputs    **********  *@
+                <input asp-for="Id" type="hidden" />
+                <input asp-for="Colors" type="hidden" id="Colors"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var colorIndex = 1; // Start with 1 because there's already one color input
+
+            function addColorInput(index, color) {
+                var colorInputGroup = $("<div class='input-group color-input-group'></div>");
+                var newColorInput = $("<input type='color' name='Colors[" + index + "].HexadecimalValue' value='" + color + "'/>");
+                var deleteButton = $("<div class='input-group-append'><button type='button' class='btn btn-outline-danger deleteColor' data-index='" + index + "'>X</button></div>");
+
+                colorInputGroup.append(newColorInput);
+                colorInputGroup.append(deleteButton);
+                colorInputGroup.appendTo("#colors");
+            }
+
+            $("#addColor").click(function () {
+                // Add a new color input
+                addColorInput(colorIndex, "#000000");
+                colorIndex++;
+            });
+
+            // create list of colors and save it in the hidden input
+            $("#save").click(function () {
+
+                // Create an array to store colors
+                var colorsArray = [];
+
+                // Function to check if a color already exists in the array
+                function isColorInArray(array, colorValue) {
+                    return array.some(color => color.hexValue === colorValue);
+                }
+
+                $(".color-input-group").each(function (index) {
+                    var colorValue = $(this).find("input[type='color']").val();
+
+                    // Check if the color already exists in the colorsArray
+                    if (!isColorInArray(colorsArray, colorValue)) {
+                        // Check if the color exists in the database
+                        checkColorInDatabase(colorValue)
+                            .then(function (existsInDatabase) {
+                                if (!existsInDatabase) {
+                                    var color = new Color(colorValue);
+                                    colorsArray.push(color);
+                                } else {
+                                    // Add the existing color to the array
+                                }
+                            })
+                            .catch(function (error) {
+                                console.error('Error checking color in the database:', error);
+                            });
+                    } else {
+                        console.log('Duplicate color found: ' + colorValue);
+                        // Handle the duplicate color case if needed
+                    }
+                });
+
+                // Convert the array to JSON and set it as the value of the hidden input
+                $("#Colors").val(JSON.stringify(colorsArray));
+
+                // For testing, you can log the JSON string in the console
+                console.log(JSON.stringify(colorsArray));
+
+                // Function to check if a color exists in the database
+                function checkColorInDatabase(colorValue) {
+                    return new Promise(function (resolve, reject) {
+                        // Make an AJAX request to check the color in the database
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Color/CheckIfColorExists',
+                            data: { colorValue: colorValue },
+                            success: function (response) {
+                                resolve(response.exists);
+                            },
+                            error: function (error) {
+                                reject(error);
+                            }
+                        });
+                    });
+                }
+            });
+
+            // Event delegation for dynamically added elements
+            $("#colorInputs").on("click", ".deleteColor", function () {
+                // Remove the color input and the associated delete button
+                $(this).closest(".color-input-group").remove();
+                colorIndex = Math.max(colorIndex - 1, 1); // Ensure colorIndex doesn't go below 1
+            });
+        });
+    </script>
+}
+
+<style>
+
+    .colors {
+        white-space: nowrap;
+        display: inline-block;
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+        margin-right: 10px; /* Adjust the spacing between divs */
+    }
+
+    .color-input-group {
+        margin-right: 10px; /* Adjust the spacing between color inputs */
+    }
+
+    .deleteColor {
+        cursor: pointer;
+    }
+
+    input[type="color"] {
+        padding: 0;
+        border: none;
+        width: 40px;
+        height: 40px;
+        margin-right: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .color-input-group {
+        margin-bottom: 10px;
+    }
+
+    .deleteColor {
+        cursor: pointer;
+    }
+
+    input[type="color"] {
+        padding: 0;
+        border: none;
+        width: 40px;
+        height: 40px;
+        margin-right: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* Optional: Adjust the appearance of the "Add Color" button */
+    #addColor {
+        margin-top: 10px; /* Add some space between the button and the color inputs */
+    }
+
+    /* Optional: Style the form submission button */
+    .btn-dark {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    /* Optional: Style the success button */
+    .btn-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    /* Optional: Style the delete button */
+    .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+
+</style>
