@@ -23,8 +23,7 @@ namespace DashboardMaker.Data
             // Configure the many-to-many relationship
             modelBuilder.Entity<ColorPalette>()
                      .HasMany(cp => cp.Colors)
-                     .WithMany(c => c.ColorPalettes)
-                     .UsingEntity(j => j.ToTable("ColorsColorPalettes"));
+                     .WithMany(c => c.ColorPalettes);
 
             // Call the base class implementation to ensure Identity configuration is applied
             base.OnModelCreating(modelBuilder);

@@ -36,8 +36,6 @@ namespace DashboardMaker.Controllers
         [HttpPost("Save")]
         public async Task<IActionResult> Save(ColorPalette colorPalette)
         {
-            //colorPalette.Colors = JsonConvert.DeserializeObject<ICollection<Color>>(colorPalette.Colors);
-
             //Checking the model validity before action
             if (!ModelState.IsValid)
             {

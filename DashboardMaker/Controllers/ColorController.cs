@@ -14,11 +14,20 @@ namespace DashboardMaker.Controllers
         }
 
         [HttpGet]
-        public Boolean CheckIfColorExists(string hexadecimal)
+        public Color GetColorId(string hexadecimal)
         {
-            //fetch the color from the database and return if its there
+            //fetch the color from the database
             var colorInDb = _context.Colors.Find(hexadecimal);
-            return colorInDb != null;
+            if(colorInDb == null)
+            {
+                // Color doesn't exist, so add it to the database
+                var newColor = new Color(hexadecimal);
+                _context.Colors.Add(newColor);
+                _context.SaveChanges();
+            }
+
+            // Return the color object
+            return _context.Colors.Find(hexadecimal);
         }
     }
 }
