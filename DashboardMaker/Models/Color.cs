@@ -6,7 +6,7 @@ namespace DashboardMaker.Models
     {
         [Key]
         public string HexadecimalValue { get; set; }
-        public ICollection<ColorPalette> ColorPalettes { get; set; }
+        public ICollection<ColorColorPalette> ColorPalettes { get; set; }
 
         // Default constructor for Entity Framework
         public Color()
