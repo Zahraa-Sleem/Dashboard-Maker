@@ -78,13 +78,8 @@
                     if (!isColorInArray(colorsArray, colorValue)) {
                         // Check if the color exists in the database
                         checkColorInDatabase(colorValue)
-                            .then(function (existsInDatabase) {
-                                if (!existsInDatabase) {
-                                    var color = new Color(colorValue);
-                                    colorsArray.push(color);
-                                } else {
-                                    // Add the existing color to the array
-                                }
+                            .then(function (color) {
+                                colorsArray.push(color);
                             })
                             .catch(function (error) {
                                 console.error('Error checking color in the database:', error);
@@ -107,8 +102,8 @@
                         // Make an AJAX request to check the color in the database
                         $.ajax({
                             type: 'GET',
-                            url: '/Color/CheckIfColorExists',
-                            data: { colorValue: colorValue },
+                            url: '/Color/GetColor',
+                            data: { hexadecimal: colorValue },
                             success: function (response) {
                                 resolve(response.exists);
                             },

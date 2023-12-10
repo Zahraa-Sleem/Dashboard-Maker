@@ -10,7 +10,6 @@ namespace DashboardMaker.Data
             : base(options)
         {
         }
-        public DbSet<User> Users { get; set; }
         public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<ColorPalette> ColorPalettes{ get; set; }

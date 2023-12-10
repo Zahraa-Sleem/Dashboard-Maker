@@ -9,6 +9,7 @@ using DashboardMaker.Data;
 
 namespace DashboardMaker.Controllers
 {
+    [Route("/DataSource")]
     public class DataSourceController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -18,7 +19,7 @@ namespace DashboardMaker.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         public IActionResult Index()
         {
             var dataSources = _context.DataSources.ToList();
@@ -26,13 +27,13 @@ namespace DashboardMaker.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("Add")]
         public async Task<IActionResult> AddDataSource()
         {
             return View("DataSourceForm", new DataSource());
         }
 
-        [HttpGet]
+        [HttpGet("Update")]
         public async Task<IActionResult> UpdateDataSource(int id)
         {
             var datasource = _context.DataSources.Find(id);
@@ -42,7 +43,7 @@ namespace DashboardMaker.Controllers
             return View("DataSourceForm", datasource);
         }
 
-        [HttpPost]
+        [HttpPost("Save")]
         public async Task<IActionResult> Save(DataSource dataSource)
         {
             //Checking the model validity before action

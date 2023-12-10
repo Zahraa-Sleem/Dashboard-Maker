@@ -14,7 +14,7 @@ namespace DashboardMaker.Controllers
         }
 
         [HttpGet]
-        public Color GetColorId(string hexadecimal)
+        public Color GetColor(string hexadecimal)
         {
             //fetch the color from the database
             var colorInDb = _context.Colors.Find(hexadecimal);
