@@ -8,12 +8,12 @@ namespace DashboardMaker.Controllers
     public class ColorController : Controller
     {
         private readonly ApplicationDbContext _context;
+
         public ColorController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
         public Color GetColor(string hexadecimal)
         {
             //fetch the color from the database

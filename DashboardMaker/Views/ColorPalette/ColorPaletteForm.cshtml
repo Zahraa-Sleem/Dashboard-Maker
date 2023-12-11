@@ -1,9 +1,9 @@
-﻿@model DashboardMaker.Models.ColorPalette
+﻿@model DashboardMaker.Models.ViewModels.ColorPaletteViewModel;
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form>
+            <form asp-action="Save" method="post"> 
                 <div class="form-group">
                     <label asp-for="Name" class="control-label">Color Palette Name</label>
                     <input asp-for="Name" type="text" class="form-control" />
@@ -13,12 +13,30 @@
                 <div class="form-group" id="colorInputs">
                     <label for="Colors">Colors</label>
                     <div id="colors">
-                        <div class="input-group color-input-group">
-                            <input type="color" name="Colors[0].HexadecimalValue" value="#000000" />
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-outline-danger deleteColor" data-index="0">X</button>
+                        @if (Model.SelectedColors != null)
+                        {
+                            var initialColors = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(Model.SelectedColors);
+                            var index = 0;
+                            foreach (var color in initialColors)
+                            {
+                                <div class="input-group color-input-group">
+                                    <input type="color" name="Colors[@index].HexadecimalValue" value="@color" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-danger deleteColor" data-index="@index">X</button>
+                                    </div>
+                                </div>
+                                index++;
+                            }
+                        }
+                        else
+                        {
+                            <div class="input-group color-input-group">
+                                <input type="color" name="Colors[0].HexadecimalValue" value="#000000" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-danger deleteColor" data-index="0">X</button>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
 
@@ -33,7 +51,7 @@
 
                 @* **********  Hidden Inputs    **********  *@
                 <input asp-for="Id" type="hidden" />
-                <input type="hidden" id="Colors"/>
+                <input asp-for="SelectedColors" type="hidden" id="Colors"/>
             </form>
         </div>
     </div>
@@ -42,7 +60,9 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            var colorIndex = 1; // Start with 1 because there's already one color input
+            var selectedcolors = @Html.Raw(Json.Serialize(Model.SelectedColors));
+            console.log(selectedcolors);
+            var colorIndex = 1;
 
             function addColorInput(index, color) {
                 var colorInputGroup = $("<div class='input-group color-input-group'></div>");
@@ -76,50 +96,19 @@
 
                     // Check if the color already exists in the colorsArray
                     if (!isColorInArray(colorsArray, colorValue)) {
-                        // Check if the color exists in the database
-                        checkColorInDatabase(colorValue)
-                            .then(function (color) {
-                                colorsArray.push(color);
-                            })
-                            .catch(function (error) {
-                                console.error('Error checking color in the database:', error);
-                            });
-                    } else {
-                        console.log('Duplicate color found: ' + colorValue);
-                        // Handle the duplicate color case if needed
+                        colorsArray.push(colorValue);
                     }
                 });
 
-                // Convert the array to JSON and set it as the value of the hidden input
+                // set the array as the value of the hidden input
                 $("#Colors").val(JSON.stringify(colorsArray));
-
-                // For testing, you can log the JSON string in the console
-                console.log(JSON.stringify(colorsArray));
-
-                // Function to check if a color exists in the database
-                function checkColorInDatabase(colorValue) {
-                    return new Promise(function (resolve, reject) {
-                        // Make an AJAX request to check the color in the database
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Color/GetColor',
-                            data: { hexadecimal: colorValue },
-                            success: function (response) {
-                                resolve(response.exists);
-                            },
-                            error: function (error) {
-                                reject(error);
-                            }
-                        });
-                    });
-                }
             });
 
             // Event delegation for dynamically added elements
             $("#colorInputs").on("click", ".deleteColor", function () {
                 // Remove the color input and the associated delete button
                 $(this).closest(".color-input-group").remove();
-                colorIndex = Math.max(colorIndex - 1, 1); // Ensure colorIndex doesn't go below 1
+                colorIndex = Math.max(colorIndex - 1, 1);
             });
         });
     </script>
@@ -204,3 +193,5 @@
     }
 
 </style>
+
+
