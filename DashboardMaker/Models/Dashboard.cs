@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace DashboardMaker.Models
 {
@@ -10,9 +11,8 @@ namespace DashboardMaker.Models
         [StringLength(100, ErrorMessage = "Title cannot exceed 100 characters")]
         [Display(Name = "Dashboard Title")]
         public string Title { get; set; }
-		//public int UserId { get; set; }
 
-		//[Display(Name = "Owner")]
-		//public IdentityUser Owner { get; set; }
-	}
+        [Display(Name = "Owner")]
+        public IdentityUser Owner { get; set; }
+    }
 }

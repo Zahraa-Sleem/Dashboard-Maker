@@ -180,6 +180,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JQYWxldHRlXENvbG9yUGFsZXR0ZUZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/Dashboard/DashboardForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXERhc2hib2FyZEZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/DataSource/DataSourceForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVNvdXJjZVxEYXRhU291cmNlRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -206,6 +210,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/Visualization/VisualizationForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmlzdWFsaXphdGlvblxWaXN1YWxpemF0aW9uRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/_ViewImports.cshtml]

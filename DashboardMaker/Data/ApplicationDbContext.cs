@@ -16,7 +16,7 @@ namespace DashboardMaker.Data
         public DbSet<ColorColorPalette> ColorColorPalettes { get; set; }
         public DbSet<VisualizationType> VisualizationTypes{ get; set; }
         public DbSet<DataSource> DataSources { get; set; }
-        public DbSet<Visualization> Visualization { get; set; }
+        public DbSet<Visualization> Visualizations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
