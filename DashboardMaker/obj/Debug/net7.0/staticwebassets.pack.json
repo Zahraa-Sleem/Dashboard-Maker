@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\login_register.css"
     },
     {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\sideBar.css",
+      "PackagePath": "staticwebassets\\css\\sideBar.css"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -19,6 +23,10 @@
     {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\images\\LandingPage.png",
       "PackagePath": "staticwebassets\\images\\LandingPage.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\sideBar.js",
+      "PackagePath": "staticwebassets\\js\\sideBar.js"
     },
     {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\site.js",

@@ -1,63 +1,66 @@
-﻿<nav class="navbar">
-    <div class="navbar-container">
-        <a href="#" class="navbar-logo">DashboardMaker</a>
-        <ul class="navbar-menu">
-            <li class="navbar-item"><a href="Identity/Account/Login" class="navbar-link">Login</a></li>
-            <li class="navbar-item"><a href="Identity/Account/Register" class="navbar-link">Signup</a></li>
-        </ul>
-    </div>
-</nav>
+﻿<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand">DashboardMaker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Identity/Account/Login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Identity/Account/Register">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
 
 <style>
-    /* Navbar Styles */
-    .navbar {
-        background-color: #905092;
-        color: white;
-        padding: 10px 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+.navbar {
+    background-color: #E7EFFF;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    .navbar-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
-    }
+.navbar-brand {
+    color: #9E5894;
+    font-size: 1.5em;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-    .navbar-logo {
-        color: #F2D7EE;
-        font-size: 1.5em;
-        text-decoration: none;
-        font-weight: bold;
-    }
+.navbar-toggler {
+    border-color: #F2D7EE; 
+}
 
-    .navbar-menu {
-        list-style: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
-        margin-left: auto;
-    }
+.navbar-nav {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end; 
+}
 
+.nav-item {
+    padding: 0 15px;
+}
 
-    .navbar-item {
-        padding: 0 15px;
-    }
+.nav-link {
+    color: #9E5894;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
 
-    .navbar-link {
-        color: white;
-        text-decoration: none;
-        font-size: 1em;
-        transition: color 0.3s ease;
-    }
-
-        .navbar-link:hover {
-            color: #AEE5D8;
-        }
-
-    .navbar-menu {
-        margin-left: auto;
-    }
-
+.nav-link:hover {
+    color: #AEE5D8;
+}
 </style>

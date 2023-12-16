@@ -184,6 +184,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXERhc2hib2FyZEZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/Dashboard/_sideBar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXF9zaWRlQmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/Documents/github projects/Dashboard-Maker/DashboardMaker/Views/DataSource/DataSourceForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVNvdXJjZVxEYXRhU291cmNlRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

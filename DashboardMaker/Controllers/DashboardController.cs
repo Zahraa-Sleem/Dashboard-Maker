@@ -19,6 +19,14 @@ namespace DashboardMaker.Controllers
 			_context = context;
 		}
 
+
+		[HttpGet("Index")]
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+
 		[HttpGet("Create")]
 		public IActionResult CreateDashboard()
 		{

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qVKETEVT8sahpgX4LpQr9K+QIFu5FYYqLO9pasW56Y4=",
+  "Hash": "Gi50n/6I2cy7fd5sxbvsfMiWJeZM4rHgEOiaJJsDpOA=",
   "Source": "DashboardMaker",
   "BasePath": "_content/DashboardMaker",
   "Mode": "Default",
@@ -1088,6 +1088,23 @@
       "OriginalItemSpec": "wwwroot\\css\\login_register.css"
     },
     {
+      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\sideBar.css",
+      "SourceId": "DashboardMaker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\",
+      "BasePath": "_content/DashboardMaker",
+      "RelativePath": "css/sideBar.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\sideBar.css"
+    },
+    {
       "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\site.css",
       "SourceId": "DashboardMaker",
       "SourceType": "Discovered",
@@ -1137,6 +1154,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\LandingPage.png"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\sideBar.js",
+      "SourceId": "DashboardMaker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\",
+      "BasePath": "_content/DashboardMaker",
+      "RelativePath": "js/sideBar.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\sideBar.js"
     },
     {
       "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\site.js",
