@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Y+y6SSwj2YlhE6nQPaV+yenB7wLrlKUQHNRTnzhNBBQ=",
+  "Hash": "KXsbf92gHsjv62yFteVjxZJ1IHIIydoBoMHSIGFNN58=",
   "Source": "DashboardMaker",
   "BasePath": "_content/DashboardMaker",
   "Mode": "Default",
@@ -1071,6 +1071,23 @@
       "OriginalItemSpec": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\DashboardMaker.bundle.scp.css"
     },
     {
+      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\login.css",
+      "SourceId": "DashboardMaker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\",
+      "BasePath": "_content/DashboardMaker",
+      "RelativePath": "css/login.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\login.css"
+    },
+    {
       "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\site.css",
       "SourceId": "DashboardMaker",
       "SourceType": "Discovered",
@@ -1103,6 +1120,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\images\\LandingPage.png",
+      "SourceId": "DashboardMaker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\",
+      "BasePath": "_content/DashboardMaker",
+      "RelativePath": "images/LandingPage.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\LandingPage.png"
     },
     {
       "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\site.js",

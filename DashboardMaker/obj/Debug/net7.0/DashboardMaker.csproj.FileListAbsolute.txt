@@ -970,3 +970,7 @@ C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\obj\Debu
 C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\obj\Debug\net7.0\DashboardMaker.pdb
 C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\obj\Debug\net7.0\DashboardMaker.genruntimeconfig.cache
 C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\obj\Debug\net7.0\ref\DashboardMaker.dll
+C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll

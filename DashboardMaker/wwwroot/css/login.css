@@ -1,0 +1,78 @@
+﻿/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Login Form Styles */
+#account {
+    max-width: 400px;
+    margin: auto;
+    padding: 1rem;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.form-floating > input {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.form-floating > label {
+    color: #6c757d;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+/* Button Styles */
+#login-submit {
+    background-color: #6f42c1;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    #login-submit:hover {
+        background-color: #5a36a8;
+    }
+
+/* Link Styles */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+/* Checkbox Styles */
+.checkbox label {
+    margin-bottom: 0;
+}
+
+.checkbox input {
+    margin-right: 5px;
+}
+
+/* Responsive Layout */
+@media (max-width: 600px) {
+    #account {
+        margin: 10px;
+        width: auto;
+    }
+}
+
+/* Validation Script Section */
+#validation-summary {
+    margin-bottom: 1rem;
+}
+
+
+
+

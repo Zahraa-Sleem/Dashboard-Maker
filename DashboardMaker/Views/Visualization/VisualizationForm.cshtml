@@ -1,1 +1,118 @@
-﻿
+﻿@model DashboardMaker.Models.Visualization;
+
+
+<style>
+	body {
+		background-color: #e9ecef;
+	}
+
+	.header {
+		text-align: center;
+		margin-bottom: 20px;
+		background-color: #343a40;
+		color: #ffffff;
+		padding: 10px;
+	}
+
+	.container {
+		background-color: #ffffff;
+		margin-top: 50px;
+		padding: 20px;
+		border-radius: 10px;
+	}
+
+	.form-group label {
+		color: #495057;
+		font-weight: bold;
+		margin-bottom: 5px;
+		background-color: #f8f9fa;
+		padding: 5px;
+		border-radius: 5px;
+	}
+
+	.form-group .form-check-label {
+		font-weight: normal;
+		background-color: transparent;
+	}
+
+</style>
+
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<form asp-action="Save" asp-controller="Visualization" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label asp-for="Title" class="control-label"></label>
+					<input asp-for="Title" type="text" class="form-control" />
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+
+				<br />
+
+				<!-- VisualizationType Dropdown -->
+				<div class="form-group">
+					<label asp-for="VisualizationTypeId" class="control-label">Visualization Type</label>
+					<select id="visualizationTypeSelect" class="form-control" asp-for="VisualizationTypeId">
+						<option value="">Select Visualization Type</option>
+					</select>
+				</div>
+
+				<!-- DataSource Dropdown -->
+				<div class="form-group">
+					<label asp-for="DataSourceId" class="control-label">Data Source</label>
+					<select id="dataSourceSelect" class="form-control" asp-for="DataSourceId">
+						<option value="">Select Data Source</option>
+					</select>
+				</div>
+				
+
+				<!-- ColorPalette Dropdown -->
+				<select id="colorPaletteSelect" class="form-control" asp-for="ColorPaletteId">
+					<option value="">Select Color Palette</option>
+				</select>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
+@section scripts {
+	<script>
+		$(document).ready(function () {
+			// Fetch and populate VisualizationType
+			$.ajax({
+				url: '/api/VisualizationType',
+				method: 'GET',
+				success: function (types) {
+					types.forEach(function (type) {
+						$('#visualizationTypeSelect').append(
+							$('<option>', {
+								value: type.id,
+								text: type.type
+							})
+						);
+					});
+				}
+			});
+			// Fetch and populate Data Sources
+			$.ajax({
+				url: '/api/DataSource',
+				method: 'GET',
+				success: function (sources) {
+					sources.forEach(function (source) {
+						$('#dataSourceSelect').append(
+							$('<option>', {
+								value: source.id,
+								text: source.sourceName
+							})
+						);
+					});
+				}
+			});
+		});
+	</script>
+}
+
+

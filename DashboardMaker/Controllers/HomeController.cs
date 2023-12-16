@@ -15,7 +15,7 @@ namespace DashboardMaker.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("LandingPage");
         }
 
         public IActionResult Privacy()

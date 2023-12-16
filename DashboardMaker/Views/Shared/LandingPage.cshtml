@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard Maker</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header>
+		<!-- Navigation bar goes here -->
+	</header>
+	<main>
+		<div class="image-container">
+			<img src="~/images/LandingPage.png">
+		</div>
+		<section class="intro">
+			<h1>Welcome to the Dashboard Maker</h1>
+			@*<p>Create stunning dashboards with ease using our dashboard maker. Whether you're a business owner, data analyst, or designer, our tool has the features and flexibility to bring your data to life.</p>
+			<button>Get Started</button>*@
+		</section>
+	</main>
+</body>
+</html>
+
+
+<style>
+	body, html {
+		font-family: 'Arial', sans-serif;
+		background: #69306D;
+		height: 100%;
+		margin: 0;
+	}
+
+	main {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		text-align: center;
+	}
+	/* Additional CSS for the image */
+	.image-container {
+		text-align: center; /* Centers the image */
+		margin-bottom: 20px; /* Adds some space below the image */
+	}
+
+		.image-container img {
+			max-width: 100%; /* Ensures the image is not wider than its container */
+			height: auto; /* Keeps the image's aspect ratio */
+			border-radius: 10px; /* Optional: Rounds the corners of the image */
+		}
+
+	.intro {
+		width: 50%;
+		margin-left: 20px;
+	}
+
+		.intro h1 {
+			color: #0E103D;
+			font-size: 2.5em;
+		}
+
+		.intro p {
+			color: #F2D7EE;
+			font-size: 1.2em;
+		}
+
+		.intro button {
+			background-color: #0E103D;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			cursor: pointer;
+			font-size: 1em;
+			transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+		}
+
+			.intro button:hover {
+				background-color: #69306D; /* New background color on hover */
+				color: #0E103D; /* New text color on hover */
+			}
+
+	.sidebar {
+		width: 40%;
+		background-color: #AEE5D8;
+		color: white;
+		padding: 20px;
+		float: right;
+	}
+
+	.mrr h2, .mrr-changes h3 {
+		color: #8E44AD;
+	}
+
+</style>

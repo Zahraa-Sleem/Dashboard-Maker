@@ -5,12 +5,20 @@
       "PackagePath": "staticwebassets\\DashboardMaker.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\images\\LandingPage.png",
+      "PackagePath": "staticwebassets\\images\\LandingPage.png"
     },
     {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\js\\site.js",
