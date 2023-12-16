@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KXsbf92gHsjv62yFteVjxZJ1IHIIydoBoMHSIGFNN58=",
+  "Hash": "qVKETEVT8sahpgX4LpQr9K+QIFu5FYYqLO9pasW56Y4=",
   "Source": "DashboardMaker",
   "BasePath": "_content/DashboardMaker",
   "Mode": "Default",
@@ -1071,12 +1071,12 @@
       "OriginalItemSpec": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\DashboardMaker.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\login.css",
+      "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\login_register.css",
       "SourceId": "DashboardMaker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\",
       "BasePath": "_content/DashboardMaker",
-      "RelativePath": "css/login.css",
+      "RelativePath": "css/login_register.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1085,7 +1085,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\login.css"
+      "OriginalItemSpec": "wwwroot\\css\\login_register.css"
     },
     {
       "Identity": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\site.css",

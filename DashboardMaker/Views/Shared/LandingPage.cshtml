@@ -8,16 +8,14 @@
 </head>
 <body>
 	<header>
-		<!-- Navigation bar goes here -->
+		<partial name="_NavBar.cshtml" />
 	</header>
 	<main>
 		<div class="image-container">
-			<img src="~/images/LandingPage.png">
+			<img src="~/images/LandingPage.png" alt="Dashboard Overview">
 		</div>
 		<section class="intro">
-			<h1>Welcome to the Dashboard Maker</h1>
-			@*<p>Create stunning dashboards with ease using our dashboard maker. Whether you're a business owner, data analyst, or designer, our tool has the features and flexibility to bring your data to life.</p>
-			<button>Get Started</button>*@
+			<h1>Design, Create, and Analyze – Your Dashboard Awaits</h1>
 		</section>
 	</main>
 </body>
@@ -26,10 +24,19 @@
 
 <style>
 	body, html {
+		background-image: src('~/images/LandingPage.png');
+		background-size: cover;
+		background-position: center;
 		font-family: 'Arial', sans-serif;
-		background: #69306D;
 		height: 100%;
 		margin: 0;
+	}
+
+	header {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 1000;
 	}
 
 	main {
@@ -39,16 +46,16 @@
 		min-height: 100vh;
 		text-align: center;
 	}
-	/* Additional CSS for the image */
+
 	.image-container {
-		text-align: center; /* Centers the image */
-		margin-bottom: 20px; /* Adds some space below the image */
+		text-align: center;
+		margin-bottom: 20px; 
 	}
 
 		.image-container img {
-			max-width: 100%; /* Ensures the image is not wider than its container */
-			height: auto; /* Keeps the image's aspect ratio */
-			border-radius: 10px; /* Optional: Rounds the corners of the image */
+			max-width: 100%;
+			height: auto;
+			border-radius: 10px;
 		}
 
 	.intro {
@@ -57,7 +64,7 @@
 	}
 
 		.intro h1 {
-			color: #0E103D;
+			color: #4d2c88;
 			font-size: 2.5em;
 		}
 
@@ -73,12 +80,12 @@
 			border: none;
 			cursor: pointer;
 			font-size: 1em;
-			transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+			transition: background-color 0.3s, color 0.3s; 
 		}
 
 			.intro button:hover {
-				background-color: #69306D; /* New background color on hover */
-				color: #0E103D; /* New text color on hover */
+				background-color: #69306D;
+				color: #0E103D;
 			}
 
 	.sidebar {
@@ -87,10 +94,6 @@
 		color: white;
 		padding: 20px;
 		float: right;
-	}
-
-	.mrr h2, .mrr-changes h3 {
-		color: #8E44AD;
 	}
 
 </style>

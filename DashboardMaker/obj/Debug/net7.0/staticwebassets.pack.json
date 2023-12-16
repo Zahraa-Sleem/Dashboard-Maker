@@ -5,8 +5,8 @@
       "PackagePath": "staticwebassets\\DashboardMaker.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\login.css",
-      "PackagePath": "staticwebassets\\css\\login.css"
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\login_register.css",
+      "PackagePath": "staticwebassets\\css\\login_register.css"
     },
     {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\css\\site.css",

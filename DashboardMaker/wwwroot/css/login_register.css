@@ -4,7 +4,7 @@ body {
 }
 
 /* Login Form Styles */
-#account {
+#account,#registerForm {
     max-width: 400px;
     margin: auto;
     padding: 1rem;
@@ -27,8 +27,8 @@ body {
 }
 
 /* Button Styles */
-#login-submit {
-    background-color: #6f42c1;
+#login-submit, #registerSubmit {
+    background-color: #905092;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -37,7 +37,7 @@ body {
     transition: background-color 0.3s;
 }
 
-    #login-submit:hover {
+    #login-submit:hover, #registerSubmit:hover {
         background-color: #5a36a8;
     }
 
@@ -62,7 +62,7 @@ a {
 
 /* Responsive Layout */
 @media (max-width: 600px) {
-    #account {
+    #account, #registerForm {
         margin: 10px;
         width: auto;
     }
