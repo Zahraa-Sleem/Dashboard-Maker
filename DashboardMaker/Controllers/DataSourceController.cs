@@ -6,6 +6,7 @@ using SqlKata.Compilers;
 using SqlKata.Execution;
 using Microsoft.AspNetCore.Http;
 using DashboardMaker.Data;
+using System.Security.Claims;
 
 namespace DashboardMaker.Controllers
 {
@@ -30,7 +31,11 @@ namespace DashboardMaker.Controllers
         [HttpGet("Add")]
         public async Task<IActionResult> AddDataSource()
         {
-            return View("DataSourceForm", new DataSource());
+            DataSource model = new DataSource()
+            {
+                OwnerId = _context.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id
+            };
+            return View("DataSourceForm", model);
         }
 
         [HttpGet("Update")]
@@ -46,8 +51,8 @@ namespace DashboardMaker.Controllers
         [HttpPost("Save")]
         public async Task<IActionResult> Save(DataSource dataSource)
         {
-            //Checking the model validity before action
-            if (!ModelState.IsValid)
+			//Checking the model validity before action
+			if (!ModelState.IsValid)
             {
                 return View("DataSourceForm", dataSource);
             }

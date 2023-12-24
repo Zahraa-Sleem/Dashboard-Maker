@@ -15,9 +15,13 @@ namespace DashboardMaker.Controllers
 		}
 
 		[HttpGet("Create")]
-		public IActionResult CreateVisualization()
+		public IActionResult CreateVisualization(int id)
 		{
-			return View("VisualizationForm", new Visualization());
+			Visualization model = new Visualization()
+			{
+				DashboardId = id
+			};
+			return View("VisualizationForm", model);
 		}
 
 		[HttpGet("Edit/{id}")]
@@ -29,5 +33,6 @@ namespace DashboardMaker.Controllers
 
 			return View("VisualizationForm", visualization);
 		}
+
 	}
 }

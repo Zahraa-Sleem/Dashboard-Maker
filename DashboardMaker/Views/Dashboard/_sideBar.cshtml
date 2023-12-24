@@ -1,10 +1,10 @@
 ﻿<link rel="stylesheet" href="~/css/sideBar.css" />
 
 <div class="sidebar">
-	<a class="active" href="#">Dashboard Maker</a>
-	<a href="#">Dashboards</a>
-	<select id="dropdownMenu"></select>
+	<a class="active">Dashboard Maker</a>
+    <select id="dashboardDropdown" class="form-control"></select>
 	<a href="/Dashboard/Create">New Dashboard</a>
+    <a href="/Visualization/Create">New Visualization</a>
 </div>
 
 <script>
@@ -22,9 +22,8 @@
     });
 
     function populateDropdown(data) {
-        const dropdown = document.getElementById('dropdownMenu');
+        const dropdown = document.getElementById('dashboardDropdown');
         data.forEach(item => {
-            // Ensure that 'Title' is the text and 'Id' is the value
             const option = new Option(item.title, item.id);
             dropdown.add(option);
         });

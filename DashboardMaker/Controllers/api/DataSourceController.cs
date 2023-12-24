@@ -3,6 +3,7 @@ using DashboardMaker.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DashboardMaker.Controllers.api
 {
@@ -20,12 +21,13 @@ namespace DashboardMaker.Controllers.api
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<DataSource>>> GetDataSources()
 		{
-			if (_context.DataSources == null)
+			string owner = null;
+			if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
 			{
-
-				return NotFound();
+				owner = _context.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id;
 			}
-			return await _context.DataSources.ToListAsync();
+
+			return await _context.DataSources.Where(d => d.OwnerId == owner).ToListAsync();
 		}
 	}
 }

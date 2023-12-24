@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DashboardMaker.Models
@@ -19,5 +20,8 @@ namespace DashboardMaker.Models
 
         public string? FileName { get; set; } // File name with extension
         public string? FileData { get; set; } // Actual file data
+
+        public string OwnerId { get; set; }
+        public IdentityUser? Owner { get; set; }
     }
 }
