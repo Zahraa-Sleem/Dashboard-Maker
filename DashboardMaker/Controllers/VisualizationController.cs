@@ -1,6 +1,9 @@
 ﻿using DashboardMaker.Data;
 using DashboardMaker.Models;
+using DashboardMaker.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DashboardMaker.Controllers
 {
@@ -17,10 +20,20 @@ namespace DashboardMaker.Controllers
 		[HttpGet("Create")]
 		public IActionResult CreateVisualization(int id)
 		{
-			Visualization model = new Visualization()
+			string owner = null;
+			if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
 			{
-				DashboardId = id
+				owner = _context.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id;
+			}
+			VisualizationViewModel model = new VisualizationViewModel()
+			{
+				Visualization = new Visualization()
+				{
+					DashboardId = id
+				},
+				DataSources = _context.DataSources.Where(d => d.OwnerId == owner).ToList()
 			};
+
 			return View("VisualizationForm", model);
 		}
 

@@ -45,6 +45,28 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Custom Middleware for redirecting based on authentication
+app.Use(async (context, next) =>
+{
+	var path = context.Request.Path.Value;
+
+	// Check if user is authenticated
+	if (context.User.Identity.IsAuthenticated)
+	{
+		context.Response.Redirect("/Dashboard/Index");
+	}
+	else
+	{
+		if (path == "/LoggedInIndex") // Authenticated user's index page
+		{
+			context.Response.Redirect("/"); // Redirect to default page
+			return;
+		}
+	}
+
+	await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 

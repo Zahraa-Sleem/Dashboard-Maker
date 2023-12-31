@@ -1,4 +1,4 @@
-﻿@model DashboardMaker.Models.Visualization;
+﻿@model DashboardMaker.Models.ViewModels.VisualizationViewModel;
 
 
 <style>
@@ -43,34 +43,47 @@
 		<div class="col-md-8">
 			<form asp-action="Save" asp-controller="Visualization" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label asp-for="Title" class="control-label"></label>
-					<input asp-for="Title" type="text" class="form-control" />
-					<span asp-validation-for="Title" class="text-danger"></span>
+					<label asp-for="Visualization.Title" class="control-label"></label>
+					<input asp-for="Visualization.Title" type="text" class="form-control" />
+					<span asp-validation-for="Visualization.Title" class="text-danger"></span>
 				</div>
 
 				<br />
 
 				<!-- VisualizationType Dropdown -->
 				<div class="form-group">
-					<label asp-for="VisualizationTypeId" class="control-label">Visualization Type</label>
-					<select id="visualizationTypeSelect" class="form-control" asp-for="VisualizationTypeId">
+					<label asp-for="Visualization.VisualizationTypeId" class="control-label">Visualization Type</label>
+					<select id="visualizationTypeSelect" class="form-control" asp-for="Visualization.VisualizationTypeId">
 						<option value="">Select Visualization Type</option>
 					</select>
 				</div>
 
+				<br />
+
 				<!-- DataSource Dropdown -->
 				<div class="form-group">
-					<label asp-for="DataSourceId" class="control-label">Data Source</label>
-					<select id="dataSourceSelect" class="form-control" asp-for="DataSourceId">
+					<label asp-for="Visualization.DataSourceId" class="control-label">Data Source</label>
+					<select id="dataSourceSelect" class="form-control" asp-for="Visualization.DataSourceId" asp-items="@(new SelectList(Model.DataSources, "Id", "SourceName"))">
 						<option value="">Select Data Source</option>
 					</select>
 				</div>
 
 				<!-- Color Palette Dropdown -->
 				<!-- Problem Here -->
+
+
 				<!-- Hidden Inputs -->
-				<input asp-for="Id" type="hidden" />
-				<input asp-for="DashboardId" type="hidden"/>
+				<input asp-for="Visualization.Id" type="hidden" />
+				<input asp-for="Visualization.DashboardId" type="hidden" />
+
+				<br />
+				<!-- IN CASE OF A DATABASE -->
+				<div class="form-group" style="display: none;" id="tablesDiv">
+					<label class="control-label">Choose your tables:</label>
+					<select id="tables">
+						<option disabled>NEED TO BE REVISITED</option>
+					</select>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -80,6 +93,8 @@
 @section scripts {
 	<script>
 		$(document).ready(function () {
+			var DataSources = @Html.Raw(Json.Serialize(Model.DataSources));
+
 			// Fetch and populate VisualizationType
 			$.ajax({
 				url: '/api/VisualizationType',
@@ -95,23 +110,32 @@
 					});
 				}
 			});
-			// Fetch and populate Data Sources
-			$.ajax({
-				url: '/api/DataSource',
-				method: 'GET',
-				success: function (sources) {
-					sources.forEach(function (source) {
-						$('#dataSourceSelect').append(
-							$('<option>', {
-								value: source.id,
-								text: source.sourceName
-							})
-						);
+
+			$('#dataSourceSelect').change(function () {
+				var selectedValue = $(this).val();
+				var selectedDataSource = DataSources.find(ds => ds.id == selectedValue);
+				console.log("Selected data source", selectedValue)
+				console.log(selectedDataSource)
+				if (selectedDataSource && (selectedDataSource.dataSourceType == 'MySQL Database' || selectedDataSource.dataSourceType == 'SQL Database')) {
+					$('#tablesDiv').css('display', 'block');
+					$.ajax({
+						url: '/api/Kata',
+						type: 'GET',
+						data: { dataSourceId: selectedValue },
+						success: function (tables) {
+							tables.forEach(function (table) {
+								$('#tables').append($('<option>', {
+									value: table,
+									text: table
+								}));
+							});
+						}
 					});
 				}
 			});
 		});
 	</script>
 }
+
 
 
