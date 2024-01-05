@@ -42,6 +42,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<form asp-action="Save" asp-controller="Visualization" method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div class="form-group">
 					<label asp-for="Visualization.Title" class="control-label"></label>
 					<input asp-for="Visualization.Title" type="text" class="form-control" />
@@ -78,9 +79,23 @@
 
 				<br />
 				<!-- IN CASE OF A DATABASE -->
+				<!-- TABLES -->
 				<div class="form-group" style="display: none;" id="tablesDiv">
 					<label class="control-label">Choose your tables:</label>
 					<select id="tables">
+						<option disabled>NEED TO BE REVISITED</option>
+					</select>
+				</div>
+				<!-- JOIN -->
+				<!-- If there is a join-->
+				<div class="form-group" style="display: none;" id="joinCheckBox">
+					<label class="form-check-label">
+						<input type="checkbox" id="showJoinTablesCheckbox" class="form-check-input" /> Has Inner join
+					</label>
+				</div>
+				<div class="form-group" style="display: none;" id="joinTablesDiv">
+					<label class="control-label">Choose your tables:</label>
+					<select id="joinTables">
 						<option disabled>NEED TO BE REVISITED</option>
 					</select>
 				</div>
@@ -111,13 +126,14 @@
 				}
 			});
 
+			// Show tables if the selected source is a database whether sql or mysql
 			$('#dataSourceSelect').change(function () {
 				var selectedValue = $(this).val();
 				var selectedDataSource = DataSources.find(ds => ds.id == selectedValue);
-				console.log("Selected data source", selectedValue)
-				console.log(selectedDataSource)
+				$('#tablesDiv').css('display', 'none');
 				if (selectedDataSource && (selectedDataSource.dataSourceType == 'MySQL Database' || selectedDataSource.dataSourceType == 'SQL Database')) {
 					$('#tablesDiv').css('display', 'block');
+					$('#joinCheckBox').css('display', 'block');
 					$.ajax({
 						url: '/api/Kata',
 						type: 'GET',
@@ -128,11 +144,25 @@
 									value: table,
 									text: table
 								}));
+								$('#joinTables').append($('<option>', {
+									value: table,
+									text: table
+								}));
 							});
 						}
 					});
 				}
 			});
+
+			// if there is a join show options
+			$('#showJoinTablesCheckbox').change(function () {
+				if ($(this).is(':checked')) {
+					$('#joinTablesDiv').css('display', 'block');
+				} else {
+					$('#joinTablesDiv').css('display', 'none');
+				}
+			});
+
 		});
 	</script>
 }

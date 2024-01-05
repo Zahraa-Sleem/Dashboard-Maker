@@ -1,12 +1,12 @@
 ﻿<link rel="stylesheet" href="~/css/sideBar.css" />
-
+<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" type="text/css" />
 <div class="sidebar">
 	<a class="active">Dashboard Maker</a>
     <select id="dashboardDropdown" class="form-control"></select>
-	<a href="/Dashboard/Create">New Dashboard</a>
-    <a href="/Visualization/Create">New Visualization</a>
+    <a href="/Dashboard/Create"><i class="fa-solid fa-table-columns"></i> New Dashboard</a>
+    <a href="/Visualization/Create"><i class="fa fa-bar-chart"></i>New Visualization</a>
+    <a href="/DataSource/Add"><i class="fa fa-database"></i>New Data Source</a>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         fetch('/api/Dashboard/GetUserDashboards')

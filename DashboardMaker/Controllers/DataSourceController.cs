@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace DashboardMaker.Controllers
 {
-    [Route("/DataSource")]
+    [Route("DataSource")]
     public class DataSourceController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -76,7 +76,7 @@ namespace DashboardMaker.Controllers
                     }
                     catch
                     {
-                        ModelState.AddModelError(string.Empty, $"Error connecting to the database.Make sure the inputs you've added are right.");
+                        ModelState.AddModelError("", "Error connecting to the database.Make sure the inputs you've added are right.");
                         return View("DataSourceForm", dataSource);
                     }
                 }
@@ -97,7 +97,7 @@ namespace DashboardMaker.Controllers
                     }
                     catch
                     {
-                        ModelState.AddModelError(string.Empty, $"Error connecting to the database.Make sure the inputs you've added are right.");
+                        ModelState.AddModelError("", "Error connecting to the database.Make sure the inputs you've added are right.");
                         return View("DataSourceForm", dataSource);
                     }
                 }

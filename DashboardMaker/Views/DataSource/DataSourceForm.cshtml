@@ -56,6 +56,8 @@ else
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<form asp-action="Save" asp-controller="DataSource" method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 				<div class="form-group">
 					<label asp-for="SourceName" class="control-label">Source Name</label>
 					<input asp-for="SourceName" type="text" class="form-control" />

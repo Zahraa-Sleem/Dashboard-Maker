@@ -974,3 +974,4 @@ C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debu
 C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Admin\Documents\github projects\Dashboard-Maker\DashboardMaker\bin\Debug\net7.0\libman.json
