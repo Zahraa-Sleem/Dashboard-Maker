@@ -31,6 +31,6 @@ namespace DashboardMaker.Models
         [Required(ErrorMessage = "Dashboard is required")]
         public int DashboardId { get; set; }
         public Dashboard Dashboard { get; set; }
-        public string? TablesJoin { get; set; }
+        public string? TablesColumns { get; set; }
     }
 }

@@ -86,7 +86,7 @@
 				<!-- Hidden Inputs -->
 				<input asp-for="Visualization.Id" type="hidden" />
 				<input id="selectedDashboardId" asp-for=Visualization.DashboardId type="hidden">
-				<input asp-for=Visualization.TablesJoin type="hidden" />
+				<input asp-for=Visualization.TablesColumns type="hidden" id="selectedTableAndColumns" />
 
 				<br />
 
@@ -192,31 +192,6 @@
 				});
 			});
 
-			// if there is a join show options
-			$('#showJoinTablesCheckbox').change(function () {
-				if ($(this).is(':checked')) {
-					$('#joinTablesDiv').css('display', 'block');
-				} else {
-					$('#joinTablesDiv').css('display', 'none');
-				}
-			});
-
-			// set hidden input for tablesjoin
-			var handleSelectTablesJoinsChange = function (event) {
-				$('#Visualization_TablesJoin').val(null);
-				// Check if either select has a value
-				var tablesValue = $('#tables').val();
-				var joinValue = $('#joinTables').val();
-
-				if (tablesValue || joinValue) {
-					var tablesJoin = {
-						table: tablesValue,
-						join: joinValue
-					};
-					$('#Visualization_TablesJoin').val(JSON.stringify(tablesJoin));
-				}
-			};
-
 			// Function to count the number of selected columns
 			function countSelectedColumns() {
 				return $('#columnsInitialSelect').find('option:selected').length;
@@ -242,16 +217,30 @@
 				return true;
 			}
 
+			// Function to gather data and save as JSON
+			function saveSelectedTableAndColumns() {
+				var selectedTable = $('#tables').val();
+				var selectedColumns = $('#columnsInitialSelect').val(); // This will be an array of selected values
+
+				var tableAndColumns = {
+					table: selectedTable,
+					columns: selectedColumns
+				};
+
+				// Convert the object to a JSON string
+				var json = JSON.stringify(tableAndColumns);
+
+				// Assign this JSON string to the hidden input field
+				$('#selectedTableAndColumns').val(json);
+			}
 			$('#submit').click(function (e) {
 				if (!validateColumnSelection()) {
 					e.preventDefault(); // Prevent form submission if validation fails
 				}
-				// If validation passes, the form will submit automatically
+				saveSelectedTableAndColumns();
+				// the form will submit automatically
 			});
 
-			// Add event listeners for the 'change' event
-			$('#joinTables').change(handleSelectTablesJoinsChange);
-			$('#tables').change(handleSelectTablesJoinsChange);
 		});
 
 

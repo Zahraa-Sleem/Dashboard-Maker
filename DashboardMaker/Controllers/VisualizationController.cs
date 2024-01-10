@@ -72,7 +72,7 @@ namespace DashboardMaker.Controllers
 				if (dataSourceType == "MySQL Database" || dataSourceType == "SQL Database")
 				{
 					// Check that TablesJoin is not null or empty
-					if (model.Visualization.TablesJoin != null)
+					if (model.Visualization.TablesColumns != null)
 					{
 						// Assuming _context is your database context and Visualization is a DbSet
 						_context.Visualizations.Add(model.Visualization);
