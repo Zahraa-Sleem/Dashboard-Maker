@@ -95,8 +95,7 @@ namespace DashboardMaker.Controllers
 				}
 				else
 				{
-					// Handle any other data source types
-					// ...
+					return BadRequest("Not a valid data source type.");
 				}
 			}
 			else

@@ -1,6 +1,5 @@
 ﻿@model DashboardMaker.Models.ViewModels.VisualizationViewModel;
 
-
 <style>
 	body {
 		background-color: #e9ecef;
@@ -90,6 +89,7 @@
 				<input asp-for=Visualization.TablesJoin type="hidden" />
 
 				<br />
+
 				<!-- IN CASE OF A DATABASE -->
 				<!-- TABLES -->
 				<div class="form-group" style="display: none;" id="tablesDiv">
@@ -99,31 +99,19 @@
 					</select>
 				</div>
 
+				<br />
+
 				<!-- Table Columns-->
 				<div class="form-group" style="display: none;" id="ColumnsDiv">
 					<label class="control-label">Choose a column or two based on the type</label>
-					<select id="columnsInitialSelect">
-						<option disabled>Select the column</option>
+					<select id="columnsInitialSelect" multiple>
 					</select>
 				</div>
 
-				<!-- JOIN -->
-				<!-- For later -->
-				@*<div class="form-group" style="display: none;" id="joinCheckBox">
-					<label class="form-check-label">
-						<input type="checkbox" id="showJoinTablesCheckbox" class="form-check-input" /> Has Inner join
-					</label>
-				</div>
-				<!-- If there is a join-->
-				<div class="form-group" style="display: none;" id="joinTablesDiv">
-					<label class="control-label">Choose your tables:</label>
-					<select id="joinTables">
-						<option disabled>Select your join table</option>
-					</select>
-				</div>*@
+				<br />
 
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-block" style="background-color: #343a40;">Save</button>
+					<button type="submit" class="btn btn-primary btn-block" style="background-color: #343a40;" id="submit">Save</button>
 				</div>
 			</form>
 		</div>
@@ -135,7 +123,7 @@
 	<script>
 		$(document).ready(function () {
 			var DataSources = @Html.Raw(Json.Serialize(Model.DataSources));
-
+			$("#columnsInitialSelect").chosen({ width: '100%', search_contains: true })
 			// Fetch and populate VisualizationType
 			$.ajax({
 				url: '/api/VisualizationType',
@@ -184,6 +172,8 @@
 			});
 
 			$('#tables').change(function () {
+				$('#columnsInitialSelect').empty();
+				$("#columnsInitialSelect").chosen("destroy")
 				var selectedTable = $(this).val();
 				var selectedDataSource = $('#dataSourceSelect').val();
 				$.ajax({
@@ -191,13 +181,13 @@
 					type: 'GET',
 					data: { dataSourceId: selectedDataSource, tableName: selectedTable },
 					success: function (columns) {
-						$('#columnsInitialSelect').empty();
 						columns.forEach(function (column) {
 							$('#columnsInitialSelect').append($('<option>', {
 								value: column,
 								text: column
 							}));
 						});
+						$("#columnsInitialSelect").chosen({ width: '100%', search_contains: true })
 					}
 				});
 			});
@@ -227,10 +217,44 @@
 				}
 			};
 
+			// Function to count the number of selected columns
+			function countSelectedColumns() {
+				return $('#columnsInitialSelect').find('option:selected').length;
+			}
+
+			// Function to validate the selection based on the chart type
+			function validateColumnSelection() {
+				var selectedChartType = $('#visualizationTypeSelect').val(); 
+				var selectedColumnCount = countSelectedColumns();
+
+				// Check if the selected chart type is 'Line Chart'
+				if (selectedChartType == 2) {
+					if (selectedColumnCount !== 2) {
+						alert("Please select exactly 2 columns for a Line Chart.");
+						return false;
+					}
+				} else {
+					if (selectedColumnCount !== 1) {
+						alert("Please select only 1 column for this chart type.");
+						return false;
+					}
+				}
+				return true;
+			}
+
+			$('#submit').click(function (e) {
+				if (!validateColumnSelection()) {
+					e.preventDefault(); // Prevent form submission if validation fails
+				}
+				// If validation passes, the form will submit automatically
+			});
+
 			// Add event listeners for the 'change' event
 			$('#joinTables').change(handleSelectTablesJoinsChange);
 			$('#tables').change(handleSelectTablesJoinsChange);
 		});
+
+
 	</script>
 }
 

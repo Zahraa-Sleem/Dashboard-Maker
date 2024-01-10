@@ -217,6 +217,38 @@
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen-sprite.png",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen-sprite.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen-sprite@2x.png",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen-sprite@2x.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen.css",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen.jquery.js",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen.jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen.jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen.jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen.min.css",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen.proto.js",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen.proto.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen.proto.min.js",
+      "PackagePath": "staticwebassets\\lib\\chosen\\chosen.proto.min.js"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\font-awesome\\css\\all.css",
       "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\all.css"
     },
