@@ -2529,7 +2529,7 @@
           }
         }
       },
-      "SqlKata/2.4.0": {
+      "SqlKata/3.0.0-beta": {
         "type": "package",
         "dependencies": {
           "System.Collections.Concurrent": "4.3.0"
@@ -2545,11 +2545,11 @@
           }
         }
       },
-      "SqlKata.Execution/2.4.0": {
+      "SqlKata.Execution/3.0.0-beta": {
         "type": "package",
         "dependencies": {
           "Humanizer.Core": "2.8.26",
-          "SqlKata": "2.4.0",
+          "SqlKata": "3.0.0-beta",
           "dapper": "2.0.123"
         },
         "compile": {
@@ -8203,29 +8203,29 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
-    "SqlKata/2.4.0": {
-      "sha512": "vWRZRUL/h7azL1u7hN5TpyakPITgF6CzELjX+wv+NnVaFhL17/LmtIVq087aNMEeNsrrC5uJMcNarmuU7Y8mlg==",
+    "SqlKata/3.0.0-beta": {
+      "sha512": "yrUJivas7yc5/U0liIEkLdVHoW+t2nyBYVLJVIUFGtPs03hABTCoGyFBTrZJDRYzIE8JxrjOu1TwyEJrcQZkqw==",
       "type": "package",
-      "path": "sqlkata/2.4.0",
+      "path": "sqlkata/3.0.0-beta",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/SqlKata.dll",
         "lib/netstandard2.0/SqlKata.xml",
-        "sqlkata.2.4.0.nupkg.sha512",
+        "sqlkata.3.0.0-beta.nupkg.sha512",
         "sqlkata.nuspec"
       ]
     },
-    "SqlKata.Execution/2.4.0": {
-      "sha512": "Sen4PQZpWitW7p8d9lbNggCVkwoIBSDqo1ZVqY5UjjRzmNJLHmFvATkqYd+ZemaMZnjjMba+a5nMIyS0uWSFeA==",
+    "SqlKata.Execution/3.0.0-beta": {
+      "sha512": "cKXZwoLUDG+M5k1/nz7EyPOUINBSrGN6xpOR5dfl2yHYme+if3R/AeeYAUWvmntuxGU4RUsRM6oEBie8AE8RAg==",
       "type": "package",
-      "path": "sqlkata.execution/2.4.0",
+      "path": "sqlkata.execution/3.0.0-beta",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/SqlKata.Execution.dll",
         "lib/netstandard2.0/SqlKata.Execution.xml",
-        "sqlkata.execution.2.4.0.nupkg.sha512",
+        "sqlkata.execution.3.0.0-beta.nupkg.sha512",
         "sqlkata.execution.nuspec"
       ]
     },
@@ -12282,8 +12282,8 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.11",
       "MySqlConnector >= 2.2.7",
       "Newtonsoft.Json >= 13.0.3",
-      "SqlKata >= 2.4.0",
-      "SqlKata.Execution >= 2.4.0",
+      "SqlKata >= 3.0.0-beta",
+      "SqlKata.Execution >= 3.0.0-beta",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -12368,11 +12368,11 @@
           },
           "SqlKata": {
             "target": "Package",
-            "version": "[2.4.0, )"
+            "version": "[3.0.0-beta, )"
           },
           "SqlKata.Execution": {
             "target": "Package",
-            "version": "[2.4.0, )"
+            "version": "[3.0.0-beta, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

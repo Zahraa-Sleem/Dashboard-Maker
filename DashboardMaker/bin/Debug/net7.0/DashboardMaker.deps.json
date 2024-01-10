@@ -44,8 +44,8 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "7.0.11",
           "MySqlConnector": "2.2.7",
           "Newtonsoft.Json": "13.0.3",
-          "SqlKata": "2.4.0",
-          "SqlKata.Execution": "2.4.0",
+          "SqlKata": "3.0.0-beta",
+          "SqlKata.Execution": "3.0.0-beta",
           "Swashbuckle.AspNetCore": "6.5.0",
           "Microsoft.AspNetCore.Antiforgery": "7.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "7.0.0.0",
@@ -2389,30 +2389,30 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
-      "SqlKata/2.4.0": {
+      "SqlKata/3.0.0-beta": {
         "dependencies": {
           "System.Collections.Concurrent": "4.3.0"
         },
         "runtime": {
           "lib/netstandard2.0/SqlKata.dll": {
-            "assemblyVersion": "2.4.0.0",
-            "fileVersion": "2.4.0.0"
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/SqlKata.dll": {}
         }
       },
-      "SqlKata.Execution/2.4.0": {
+      "SqlKata.Execution/3.0.0-beta": {
         "dependencies": {
           "Humanizer.Core": "2.14.1",
-          "SqlKata": "2.4.0",
+          "SqlKata": "3.0.0-beta",
           "Dapper": "2.0.123"
         },
         "runtime": {
           "lib/netstandard2.0/SqlKata.Execution.dll": {
-            "assemblyVersion": "2.4.0.0",
-            "fileVersion": "2.4.0.0"
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
           }
         },
         "compile": {
@@ -6117,19 +6117,19 @@
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
     },
-    "SqlKata/2.4.0": {
+    "SqlKata/3.0.0-beta": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vWRZRUL/h7azL1u7hN5TpyakPITgF6CzELjX+wv+NnVaFhL17/LmtIVq087aNMEeNsrrC5uJMcNarmuU7Y8mlg==",
-      "path": "sqlkata/2.4.0",
-      "hashPath": "sqlkata.2.4.0.nupkg.sha512"
+      "sha512": "sha512-yrUJivas7yc5/U0liIEkLdVHoW+t2nyBYVLJVIUFGtPs03hABTCoGyFBTrZJDRYzIE8JxrjOu1TwyEJrcQZkqw==",
+      "path": "sqlkata/3.0.0-beta",
+      "hashPath": "sqlkata.3.0.0-beta.nupkg.sha512"
     },
-    "SqlKata.Execution/2.4.0": {
+    "SqlKata.Execution/3.0.0-beta": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Sen4PQZpWitW7p8d9lbNggCVkwoIBSDqo1ZVqY5UjjRzmNJLHmFvATkqYd+ZemaMZnjjMba+a5nMIyS0uWSFeA==",
-      "path": "sqlkata.execution/2.4.0",
-      "hashPath": "sqlkata.execution.2.4.0.nupkg.sha512"
+      "sha512": "sha512-cKXZwoLUDG+M5k1/nz7EyPOUINBSrGN6xpOR5dfl2yHYme+if3R/AeeYAUWvmntuxGU4RUsRM6oEBie8AE8RAg==",
+      "path": "sqlkata.execution/3.0.0-beta",
+      "hashPath": "sqlkata.execution.3.0.0-beta.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",

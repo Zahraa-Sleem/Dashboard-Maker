@@ -69,35 +69,61 @@
 					</select>
 				</div>
 
+				<br />
 				<!-- Color Palette Dropdown -->
-				<!-- Problem Here -->
+				<!-- I need to display the colors also-->
+				<div class="form-group">
+					<label asp-for="Visualization.ColorPaletteId" class="control-label">Color Palette</label>
+					<select class="form-control" asp-for="Visualization.ColorPaletteId">
+						<option disabled selected>Select Color Palette</option>
+						@foreach (var obj in Model.ColorPalettes)
+						{
+							<option value="@obj.Id">@obj.Name</option>
+						}
+					</select>
+				</div>
 
 
 				<!-- Hidden Inputs -->
 				<input asp-for="Visualization.Id" type="hidden" />
-				<input asp-for="Visualization.DashboardId" type="hidden" />
+				<input id="selectedDashboardId" asp-for=Visualization.DashboardId type="hidden">
+				<input asp-for=Visualization.TablesJoin type="hidden" />
 
 				<br />
 				<!-- IN CASE OF A DATABASE -->
 				<!-- TABLES -->
 				<div class="form-group" style="display: none;" id="tablesDiv">
-					<label class="control-label">Choose your tables:</label>
+					<label class="control-label">Choose a table:</label>
 					<select id="tables">
-						<option disabled>NEED TO BE REVISITED</option>
+						<option disabled>Select the table you want to create a dashboard from</option>
 					</select>
 				</div>
+
+				<!-- Table Columns-->
+				<div class="form-group" style="display: none;" id="ColumnsDiv">
+					<label class="control-label">Choose a column or two based on the type</label>
+					<select id="columnsInitialSelect">
+						<option disabled>Select the column</option>
+					</select>
+				</div>
+
 				<!-- JOIN -->
-				<!-- If there is a join-->
-				<div class="form-group" style="display: none;" id="joinCheckBox">
+				<!-- For later -->
+				@*<div class="form-group" style="display: none;" id="joinCheckBox">
 					<label class="form-check-label">
 						<input type="checkbox" id="showJoinTablesCheckbox" class="form-check-input" /> Has Inner join
 					</label>
 				</div>
+				<!-- If there is a join-->
 				<div class="form-group" style="display: none;" id="joinTablesDiv">
 					<label class="control-label">Choose your tables:</label>
 					<select id="joinTables">
-						<option disabled>NEED TO BE REVISITED</option>
+						<option disabled>Select your join table</option>
 					</select>
+				</div>*@
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-block" style="background-color: #343a40;">Save</button>
 				</div>
 			</form>
 		</div>
@@ -131,11 +157,14 @@
 				var selectedValue = $(this).val();
 				var selectedDataSource = DataSources.find(ds => ds.id == selectedValue);
 				$('#tablesDiv').css('display', 'none');
+				$('#joinCheckBox').css('display', 'none');
+				$('#ColumnsDiv').css('display', 'none');
 				if (selectedDataSource && (selectedDataSource.dataSourceType == 'MySQL Database' || selectedDataSource.dataSourceType == 'SQL Database')) {
 					$('#tablesDiv').css('display', 'block');
 					$('#joinCheckBox').css('display', 'block');
+					$('#ColumnsDiv').css('display', 'block');
 					$.ajax({
-						url: '/api/Kata',
+						url: '/api/Kata/GetTables',
 						type: 'GET',
 						data: { dataSourceId: selectedValue },
 						success: function (tables) {
@@ -154,6 +183,25 @@
 				}
 			});
 
+			$('#tables').change(function () {
+				var selectedTable = $(this).val();
+				var selectedDataSource = $('#dataSourceSelect').val();
+				$.ajax({
+					url: '/api/Kata/GetColumns',
+					type: 'GET',
+					data: { dataSourceId: selectedDataSource, tableName: selectedTable },
+					success: function (columns) {
+						$('#columnsInitialSelect').empty();
+						columns.forEach(function (column) {
+							$('#columnsInitialSelect').append($('<option>', {
+								value: column,
+								text: column
+							}));
+						});
+					}
+				});
+			});
+
 			// if there is a join show options
 			$('#showJoinTablesCheckbox').change(function () {
 				if ($(this).is(':checked')) {
@@ -163,6 +211,25 @@
 				}
 			});
 
+			// set hidden input for tablesjoin
+			var handleSelectTablesJoinsChange = function (event) {
+				$('#Visualization_TablesJoin').val(null);
+				// Check if either select has a value
+				var tablesValue = $('#tables').val();
+				var joinValue = $('#joinTables').val();
+
+				if (tablesValue || joinValue) {
+					var tablesJoin = {
+						table: tablesValue,
+						join: joinValue
+					};
+					$('#Visualization_TablesJoin').val(JSON.stringify(tablesJoin));
+				}
+			};
+
+			// Add event listeners for the 'change' event
+			$('#joinTables').change(handleSelectTablesJoinsChange);
+			$('#tables').change(handleSelectTablesJoinsChange);
 		});
 	</script>
 }

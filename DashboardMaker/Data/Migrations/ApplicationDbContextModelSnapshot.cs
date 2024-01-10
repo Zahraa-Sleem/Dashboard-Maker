@@ -139,6 +139,9 @@ namespace DashboardMaker.Data.Migrations
                     b.Property<int>("DataSourceId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TablesJoin")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)

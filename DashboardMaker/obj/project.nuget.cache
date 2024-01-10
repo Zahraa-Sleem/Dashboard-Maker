@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HKI30U0/ZYdsoxbSJrwtRSmqAAH0XyOUbzb4aYYgw5p0QnTh31sG6l1EKTcwqOf2tP1hpfGssQC0clOCJ1EBSA==",
+  "dgSpecHash": "a5tlga1prGafcIsX/9Eda0iQ74ZwDORWf/+4IyHxOy+oM8RvKJl+WkdLfvya1JS4BzZyCLrYPXpv3NXj6S8b+A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\DashboardMaker.csproj",
   "expectedPackageFiles": [
@@ -157,8 +157,8 @@
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\sqlkata\\2.4.0\\sqlkata.2.4.0.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\sqlkata.execution\\2.4.0\\sqlkata.execution.2.4.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\sqlkata\\3.0.0-beta\\sqlkata.3.0.0-beta.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\sqlkata.execution\\3.0.0-beta\\sqlkata.execution.3.0.0-beta.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
