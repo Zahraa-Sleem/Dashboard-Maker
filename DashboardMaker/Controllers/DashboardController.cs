@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace DashboardMaker.Controllers
 {
 	[Authorize]
-	[Route("/Dashboard")]
+	[Route("Dashboard")]
 	public class DashboardController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -56,13 +56,6 @@ namespace DashboardMaker.Controllers
 				// Redirect to the login page to handle the unauthenticated user.
 				return RedirectToAction("Index", "Home");
 			}
-
-			//// Checking the model validity before action
-			//if (!ModelState.IsValid)
-			//{
-			//	// If not valid, redirect to the form with posted data
-			//	return View("DashboardForm", dashboard);
-			//}
 
 			// Checking if the dashboard is new or old
 			if (dashboard.Id == 0)

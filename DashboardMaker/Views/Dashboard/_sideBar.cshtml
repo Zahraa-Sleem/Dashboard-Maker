@@ -2,41 +2,52 @@
 <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" type="text/css" />
 <div class="sidebar">
 	<a class="active">Dashboard Maker</a>
-    <select id="dashboardDropdown" style="width:80%;"></select>
-    <a href="/Dashboard/Create"><i class="fa-solid fa-table-columns"></i> New Dashboard</a>
-    <a href="/Visualization/Create" id="createVisualizationLink"><i class="fa fa-bar-chart"></i>New Visualization</a>
-    <a href="/DataSource/Add"><i class="fa fa-database"></i>New Data Source</a>
+	<select id="dashboardDropdown" style="width:80%;"></select>
+	<a href="/Dashboard/Create"><i class="fa-solid fa-table-columns"></i> New Dashboard</a>
+	<a href="/Visualization/Create" id="createVisualizationLink"><i class="fa fa-bar-chart"></i>New Visualization</a>
+	<a href="/DataSource/Add"><i class="fa fa-database"></i>New Data Source</a>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetch('/api/Dashboard/GetUserDashboards')
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                populateDropdown(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    });
+	document.addEventListener('DOMContentLoaded', function () {
+		fetch('/api/Dashboard/GetUserDashboards')
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				populateDropdown(data);
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
+			});
+	});
 
-    const dropdown = document.getElementById('dashboardDropdown');
-    dropdown.addEventListener('change', function () {
-        const selectedDashboardId = this.value;
-        const createVisualizationLink = document.getElementById('createVisualizationLink');
-        createVisualizationLink.href = '/Visualization/Create/' + selectedDashboardId;
-    });
+	const dropdown = document.getElementById('dashboardDropdown');
+	dropdown.addEventListener('change', function () {
+		const selectedDashboardId = this.value;
+		const createVisualizationLink = document.getElementById('createVisualizationLink');
+		createVisualizationLink.href = '/Visualization/Create/' + selectedDashboardId;
+	});
 
-    function populateDropdown(data) {
-        const dropdown = document.getElementById('dashboardDropdown');
-        const option = new Option("Choose a dashboard",0)
-        dropdown.add(option);
-        data.forEach(item => {
-            const option = new Option(item.title, item.id);
-            dropdown.add(option);
-        });
-    }
+	function populateDropdown(data) {
+		const dropdown = document.getElementById('dashboardDropdown');
+		const option = new Option("Choose a dashboard", 0)
+		dropdown.add(option);
+		data.forEach(item => {
+			const option = new Option(item.title, item.id);
+			dropdown.add(option);
+		});
+	}
+
+	function fetchAndDisplayVisualizations(dashboardId) {
+		fetch(`/api/Visualization/GetByDashboard/${dashboardId}`)
+			.then(response => response.json())
+			.then(visualizations => {
+				displayVisualizations(visualizations);
+			})
+			.catch(error => {
+				console.error('Error fetching visualizations:', error);
+			});
+	}
 </script>
 
 

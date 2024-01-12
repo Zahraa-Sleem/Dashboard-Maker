@@ -26,8 +26,11 @@ namespace DashboardMaker.Controllers.api
 		public async Task<ActionResult<List<string>>> GetTables(int dataSourceId)
 		{
 			var DataSource = _context.DataSources.Find(dataSourceId);
+			if (DataSource == null)
+			{
+				return NotFound("Data source not found.");
+			}
 			var tables = new List<string>();
-
 			QueryFactory db;
 
 			if (DataSource.DataSourceType == "SQL Database")
@@ -43,15 +46,28 @@ namespace DashboardMaker.Controllers.api
 				throw new NotImplementedException("Database type not supported");
 			}
 
+			// Extract the database name from the connection string
+			var databaseNameKeyValue = DataSource.ConnectionString
+				.Split(';')
+				.Select(part => part.Split('='))
+				.FirstOrDefault(part => part[0].Equals("Database", StringComparison.OrdinalIgnoreCase));
+
+			if (databaseNameKeyValue == null || databaseNameKeyValue.Length < 2)
+			{
+				return BadRequest("The database name could not be found in the connection string.");
+			}
+
+			string databaseName = databaseNameKeyValue[1];
+
 			// Build and execute the query based on the database type
 			var query = DataSource.DataSourceType == "SQL Database"
-			? db.Query("INFORMATION_SCHEMA.TABLES").Select("TABLE_NAME").Where("TABLE_TYPE", "BASE TABLE")
+				? db.Query("INFORMATION_SCHEMA.TABLES")
+				.Select("TABLE_NAME")
+				.Where("TABLE_SCHEMA", "=", "dbo") 
+				.Where("TABLE_TYPE", "BASE TABLE")
 			: db.Query("INFORMATION_SCHEMA.TABLES")
 				.Select("TABLE_NAME")
-				.Where("TABLE_SCHEMA", "!=", "mysql")
-				.Where("TABLE_SCHEMA", "!=", "information_schema")
-				.Where("TABLE_SCHEMA", "!=", "performance_schema")
-				.Where("TABLE_SCHEMA", "!=", "sys")
+				.Where("TABLE_SCHEMA", "=", databaseName) 
 				.Where("TABLE_TYPE", "BASE TABLE");
 
 
@@ -96,9 +112,29 @@ namespace DashboardMaker.Controllers.api
 				using (IDbConnection connection = CreateConnection(dataSource))
 				{
 					connection.Open();
-					var command = CreateCommand(connection, tableName);
+					IDbCommand command; // Changed 'var' to 'IDbCommand'
 
-					using (var reader =  command.ExecuteReader())
+					if (dataSource.DataSourceType == "SQL Database")
+					{
+						command = CreateCommand(connection, tableName, "dbo");
+					}
+					else // Assuming the else block handles MySQL Database
+					{
+						var databaseNameKeyValue = dataSource.ConnectionString
+							.Split(';')
+							.Select(part => part.Split('='))
+							.FirstOrDefault(part => part[0].Equals("Database", StringComparison.OrdinalIgnoreCase));
+
+						if (databaseNameKeyValue == null || databaseNameKeyValue.Length < 2)
+						{
+							return BadRequest("The database name could not be found in the connection string.");
+						}
+
+						string databaseName = databaseNameKeyValue[1];
+						command = CreateCommand(connection, tableName, databaseName);
+					}
+
+					using (var reader = command.ExecuteReader())
 					{
 						while (reader.Read())
 						{
@@ -110,10 +146,77 @@ namespace DashboardMaker.Controllers.api
 			}
 			catch (Exception ex)
 			{
+				// It's a good practice to log the exception here
 				return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
 			}
 		}
 
+
+		[HttpGet("GetDataForAGraph/{visualizationId}")]
+		public async Task<ActionResult<List<string>>> GetDataForAGraph(int visualizationId)
+		{
+			// Find the visualization from the database
+			var visualization = await _context.Visualizations.FindAsync(visualizationId);
+			if (visualization == null)
+			{
+				return NotFound("Visualization not found.");
+			}
+
+			DataSource dataSource = await _context.DataSources.FindAsync(visualization.DataSourceId);
+			if (dataSource == null)
+			{
+				return NotFound("Data source not found.");
+			}
+
+			if (dataSource.DataSourceType == "MySQL Database" || dataSource.DataSourceType == "SQL Database")
+			{
+				var tableColumns = System.Text.Json.JsonSerializer.Deserialize<TableColumns>(visualization.TablesColumns);
+				using (var connection = CreateConnection(dataSource))
+				{
+					connection.Open();
+					string columns = string.Join(", ", tableColumns.columns);
+					string query = $"SELECT {columns} FROM {tableColumns.table}";
+
+					using (var command = connection.CreateCommand())
+					{
+						command.CommandText = query;
+						try
+						{
+							using (var reader = command.ExecuteReader())
+							{
+								var results = new List<RowData>();
+								while (reader.Read())
+								{
+									var rowData = new RowData();
+									for (int i = 0; i < reader.FieldCount; i++)
+									{
+										var columnData = new ColumnData
+										{
+											ColumnName = reader.GetName(i),
+											Value = reader.IsDBNull(i) ? "null" : reader.GetValue(i).ToString()
+										};
+										rowData.Columns.Add(columnData);
+									}
+									results.Add(rowData);
+								}
+								return Ok(results);
+							}
+						}
+						catch(Exception ex)
+						{
+							Console.WriteLine(ex.ToString());
+						}		
+					}
+				}
+				return Ok();
+			}
+			else
+			{
+				return BadRequest("Unsupported data source type.");
+			}
+		}
+
+		// helper functions
 		private IDbConnection CreateConnection(DataSource dataSource)
 		{
 			return dataSource.DataSourceType switch
@@ -124,17 +227,48 @@ namespace DashboardMaker.Controllers.api
 			};
 		}
 
-		private IDbCommand CreateCommand(IDbConnection connection, string tableName)
+
+		private IDbCommand CreateCommand(IDbConnection connection, string tableName, string schemaName)
 		{
 			IDbCommand command = connection.CreateCommand();
-			command.CommandText = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @tableName";
-			var parameter = command.CreateParameter();
-			parameter.ParameterName = "@tableName";
-			parameter.Value = tableName;
-			command.Parameters.Add(parameter);
+			command.CommandText = @"SELECT COLUMN_NAME 
+                            FROM INFORMATION_SCHEMA.COLUMNS 
+                            WHERE TABLE_NAME = @tableName 
+                            AND TABLE_SCHEMA = @schemaName";
+
+			var tableNameParameter = command.CreateParameter();
+			tableNameParameter.ParameterName = "@tableName";
+			tableNameParameter.Value = tableName;
+			command.Parameters.Add(tableNameParameter);
+
+			var schemaNameParameter = command.CreateParameter();
+			schemaNameParameter.ParameterName = "@schemaName";
+			schemaNameParameter.Value = schemaName;
+			command.Parameters.Add(schemaNameParameter);
 
 			return command;
 		}
 
+
+
+
+		// Helper class to deserialize the JSON
+		public class TableColumns
+		{
+			public string table { get; set; }
+			public List<string> columns { get; set; }
+		}
+
+		// Helper classes to use for generic data and different data types
+		public class RowData
+		{
+			public List<ColumnData> Columns { get; set; } = new List<ColumnData>();
+		}
+
+		public class ColumnData
+		{
+			public string ColumnName { get; set; }
+			public string Value { get; set; }
+		}
 	}
 }

@@ -70,6 +70,28 @@ app.Use(async (context, next) =>
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.Use(async (context, next) =>
+{
+	// If the request path is the root (default page)
+	if (context.Request.Path == "/")
+	{
+		if (context.User.Identity.IsAuthenticated)
+		{
+			// Redirect to a different page if the user is authenticated
+			context.Response.Redirect("/Dashboard/Index");
+		}
+		else
+		{
+			// Redirect to login or home page if the user is not authenticated
+			context.Response.Redirect("/Home");
+		}
+	}
+	else
+	{
+		await next.Invoke();
+	}
+});
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
