@@ -18,6 +18,7 @@
 
 	<div id="visualizationsContainer"></div>
 
+	<script src="~/lib/chart/chart.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			fetch('/api/Dashboard/GetUserDashboards')
@@ -107,32 +108,65 @@
 			// Determine the type of visualization and render accordingly
 			switch (visualization.visualizationTypeId) {
 				case 2:
-					renderLineChart(visualization.title,Data);
+					renderLineChart(visualization,Data);
 					break;
 				case 1:
-					renderBarChart(visualization.title,Data);
+					renderBarChart(visualization,Data);
 					break;
 				case 3:
-					renderPieChart(visualization.title,Data);
+					renderPieChart(visualization,Data);
 					break;
 				default:
 					console.error('Unsupported visualization type:', visualization.type);
 			}
 		}
 
-		function renderLineChart(title,data) {
-			console.log("Line chart");
-			console.log(data);
+		function renderLineChart(visualization,data) {
+			addCanvasToContainer(visualization.id);
 		}
 
-		function renderBarChart(title,data) {
-			//take the counts from  countOccurrences(data)
-			// draw the bar chart
+		function renderBarChart(visualization, data) 
+		{
+			// create a canvas element of id visualization.id
+			// add this canvas to div visualizationsContainer
+			addCanvasToContainer(visualization.id);
+
+			// Count the occurrences of data
+			const occurrences = countOccurrences(data);
+
+
+			// Get the context of the newly created canvas
+			const ctx = document.getElementById(visualization.id).getContext('2d');
+
+			// Generate a color for each item in the data
+		   const backgroundColors = Object.keys(occurrences).map(() => getRandomColor());
+		   const borderColors = backgroundColors.map(color => color.replace('0.5', '1'));
+
+			// Create and draw the bar chart using Chart.js
+			const myBarChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: Object.keys(occurrences),
+					datasets: [{
+						label: 'Number of Occurrences',
+						data: Object.values(occurrences),
+						backgroundColor: backgroundColors,
+						borderColor: borderColors,
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
 		}
 
-		function renderPieChart(title,data) {
-			//take the counts from  countOccurrences(data)
-			// draw the pie chart
+		function renderPieChart(visualization, data) {
+			addCanvasToContainer(visualization.id);
 		}
 
 		function countOccurrences(data) {
@@ -147,6 +181,28 @@
 			return counts;
 		}
 
+		function addCanvasToContainer(visualizationId) {
+			// Create a new canvas element
+			const canvas = document.createElement('canvas');
+
+			// Assign the ID based on the visualization.id
+			canvas.id = visualizationId;
+
+			// Set some basic dimensions (optional, adjust as needed)
+			canvas.width = 400; // example width
+			canvas.height = 300; // example height
+
+			// Find the container div by its ID and append the new canvas to it
+			const container = document.getElementById('visualizationsContainer');
+			container.appendChild(canvas);
+		}
+
+		function getRandomColor() {
+			const r = Math.floor(Math.random() * 256);
+			const g = Math.floor(Math.random() * 256);
+			const b = Math.floor(Math.random() * 256);
+			return `rgba(${r}, ${g}, ${b}, 0.5)`;
+		}
 	</script>
 </body>
 </html>

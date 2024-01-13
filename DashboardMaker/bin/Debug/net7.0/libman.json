@@ -9,6 +9,10 @@
     {
       "library": "chosen@1.8.7",
       "destination": "wwwroot/lib/chosen/"
+    },
+    {
+      "library": "Chart.js@4.4.1",
+      "destination": "wwwroot/lib/Chart.js/"
     }
   ]
 }

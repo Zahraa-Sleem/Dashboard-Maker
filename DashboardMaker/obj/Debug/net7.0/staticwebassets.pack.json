@@ -217,6 +217,62 @@
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.cjs.map",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.cjs.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.js",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.js.map",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.min.js",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.umd.js",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.umd.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.umd.js.map",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.umd.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\chart.umd.min.js",
+      "PackagePath": "staticwebassets\\lib\\chart\\chart.umd.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\helpers.cjs.map",
+      "PackagePath": "staticwebassets\\lib\\chart\\helpers.cjs.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\helpers.js",
+      "PackagePath": "staticwebassets\\lib\\chart\\helpers.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\helpers.js.map",
+      "PackagePath": "staticwebassets\\lib\\chart\\helpers.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\helpers.min.js",
+      "PackagePath": "staticwebassets\\lib\\chart\\helpers.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\index.d.ts",
+      "PackagePath": "staticwebassets\\lib\\chart\\index.d.ts"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\index.umd.d.ts",
+      "PackagePath": "staticwebassets\\lib\\chart\\index.umd.d.ts"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chart\\types.d.ts",
+      "PackagePath": "staticwebassets\\lib\\chart\\types.d.ts"
+    },
+    {
       "Id": "C:\\Users\\Admin\\Documents\\github projects\\Dashboard-Maker\\DashboardMaker\\wwwroot\\lib\\chosen\\chosen-sprite.png",
       "PackagePath": "staticwebassets\\lib\\chosen\\chosen-sprite.png"
     },
