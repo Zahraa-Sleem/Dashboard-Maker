@@ -59,7 +59,6 @@
 					// Step 2: Fetch additional data based on the visualizations
 					visualizations.forEach(visualization => {
 						getDataToBePlotted(visualization).then(Data => {
-							console.log(Data);
 							// Step 3: Display data
 							displayVisualizations(visualization, Data);
 						});
@@ -76,38 +75,76 @@
 				if (!response.ok) {
 					throw new Error(`Network response was not ok: ${response.statusText}`);
 				}
-				return await response;
+
+				const data = await response.json(); // Parse JSON response
+				if (Array.isArray(data)) {
+					// Assuming the data is an array of RowData objects
+					return data.map(row => {
+						if (!Array.isArray(row.columns)) {
+							console.error('Row does not contain a Columns array:', row);
+							return {}; // Return an empty object or handle this case as needed
+						}
+
+						return row.columns.reduce((obj, column) => {
+							obj[column.columnName] = column.value;
+							return obj;
+						}, {});
+					});
+				} else {
+					// Handle other responses like error messages
+					console.error('Response is not in the expected format:', data);
+					return []; // or throw an error, depending on your use case
+				}
 			} catch (error) {
 				console.error('There was a problem with your fetch operation:', error);
 				throw error;
 			}
 		}
 
+
+
 		function displayVisualizations(visualization,Data) {
 			// Determine the type of visualization and render accordingly
-			switch (visualization.dataSourceType) {
-				case 'LineChart':
-					renderLineChart(Data);
+			switch (visualization.visualizationTypeId) {
+				case 2:
+					renderLineChart(visualization.title,Data);
 					break;
-				case 'barChart':
-					renderBarChart(Data);
+				case 1:
+					renderBarChart(visualization.title,Data);
 					break;
-				case 'pieChart':
-					renderPieChart(Data);
+				case 3:
+					renderPieChart(visualization.title,Data);
 					break;
-				// Add cases for other types of visualizations
 				default:
 					console.error('Unsupported visualization type:', visualization.type);
 			}
 		}
 
-		function renderLineChart(data) {
+		function renderLineChart(title,data) {
+			console.log("Line chart");
+			console.log(data);
 		}
 
-		function renderBarChart(data) {
+		function renderBarChart(title,data) {
+			//take the counts from  countOccurrences(data)
+			// draw the bar chart
 		}
 
-		function renderPieChart(data) {
+		function renderPieChart(title,data) {
+			//take the counts from  countOccurrences(data)
+			// draw the pie chart
+		}
+
+		function countOccurrences(data) {
+			const counts = {};
+			data.forEach(item => {
+				const key = Object.keys(item)[0];
+				if (key) {
+					counts[key] = counts[key] || {};
+					counts[key][item[key]] = (counts[key][item[key]] || 0) + 1;
+				}
+			});
+			return counts;
 		}
 
 	</script>
