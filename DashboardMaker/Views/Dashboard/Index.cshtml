@@ -6,51 +6,83 @@
 <head>
 	<link rel="stylesheet" href="~/css/sideBar.css" />
 	<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<style>
+		.flex-container {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.sidebar {
+			width: 20%;
+		}
+
+		#visualizationsContainer {
+			width: 80%;
+			overflow-x: auto; /* Enables horizontal scrolling */
+			white-space: nowrap; /* Keeps all graphs in a single line */
+/*			border: 1px solid red;
+*/		}
+
+		.graph {
+			flex: 0 0 auto; /* Prevents graphs from shrinking */
+			width: 300px; /* Or any other fixed width */
+			margin-right: 10px; /* Spacing between graphs */
+/*			border: 1px solid black;*/
+		}
+	</style>
 </head>
 <body>
-	<div class="sidebar">
-		<a class="active">Dashboard Maker</a>
-		<select id="dashboardDropdown" style="width:80%;"></select>
-		<a href="/Dashboard/Create"><i class="fa-solid fa-table-columns"></i> New Dashboard</a>
-		<a href="/Visualization/Create" id="createVisualizationLink"><i class="fa fa-bar-chart"></i>New Visualization</a>
-		<a href="/DataSource/Add"><i class="fa fa-database"></i>New Data Source</a>
+
+	<div class="flex-container">
+		<div class="sidebar">
+			<a class="active">Dashboard Maker</a>
+			<select id="dashboardDropdown" style="width:80%;"></select>
+			<a href="/Dashboard/Create"><i class="fa-solid fa-table-columns"></i> New Dashboard</a>
+			<a href="/Visualization/Create" id="createVisualizationLink"><i class="fa fa-bar-chart"></i>New Visualization</a>
+			<a href="/DataSource/Add"><i class="fa fa-database"></i>New Data Source</a>
+		</div>
+
+		<div id="visualizationsContainer" class="container-fluid">
+			<div class="flex-row flex-nowrap">
+
+			</div>
+		</div>
+
 	</div>
 
-	<div id="visualizationsContainer"></div>
-
-	<script src="~/lib/chart/chart.js"></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			fetch('/api/Dashboard/GetUserDashboards')
-				.then(response => {
-					return response.json();
-				})
-				.then(data => {
-					populateDropdown(data);
-				})
-				.catch(error => {
-					console.error('Error fetching data:', error);
-				});
-
-			const dropdown = document.getElementById('dashboardDropdown');
-			dropdown.addEventListener('change', function () {
-				const selectedDashboardId = this.value;
-				const createVisualizationLink = document.getElementById('createVisualizationLink');
-				createVisualizationLink.href = '/Visualization/Create/' + selectedDashboardId;
-				fetchAndDisplayVisualizations(selectedDashboardId);
+</body>
+</html>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		fetch('/api/Dashboard/GetUserDashboards')
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				populateDropdown(data);
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
 			});
 
-			function populateDropdown(data) {
-				const dropdown = document.getElementById('dashboardDropdown');
-				const option = new Option("Choose a dashboard", 0);
-				dropdown.add(option);
-				data.forEach(item => {
-					const option = new Option(item.title, item.id);
-					dropdown.add(option);
-				});
-			}
+		const dropdown = document.getElementById('dashboardDropdown');
+		dropdown.addEventListener('change', function () {
+			const selectedDashboardId = this.value;
+			const createVisualizationLink = document.getElementById('createVisualizationLink');
+			createVisualizationLink.href = '/Visualization/Create/' + selectedDashboardId;
+			fetchAndDisplayVisualizations(selectedDashboardId);
 		});
 
+		function populateDropdown(data) {
+			const dropdown = document.getElementById('dashboardDropdown');
+			const option = new Option("Choose a dashboard", 0);
+			dropdown.add(option);
+			data.forEach(item => {
+				const option = new Option(item.title, item.id);
+				dropdown.add(option);
+			});
+		}
 
 		function fetchAndDisplayVisualizations(dashboardId) {
 			fetch(`/api/Visualization/GetByDashboard/${dashboardId}`)
@@ -103,53 +135,57 @@
 		}
 
 
-
-		function displayVisualizations(visualization,Data) {
+		function displayVisualizations(visualization, Data) {
 			// Determine the type of visualization and render accordingly
 			switch (visualization.visualizationTypeId) {
 				case 2:
-					renderLineChart(visualization,Data);
+					renderLineChart(visualization, Data);
 					break;
 				case 1:
-					renderBarChart(visualization,Data);
+					renderBarChart(visualization, Data);
 					break;
 				case 3:
-					renderPieChart(visualization,Data);
+					renderPieChart(visualization, Data);
 					break;
 				default:
 					console.error('Unsupported visualization type:', visualization.type);
 			}
 		}
 
-		function renderLineChart(visualization,data) {
+		function renderLineChart(visualization, data) {
 			addCanvasToContainer(visualization.id);
 		}
 
-		function renderBarChart(visualization, data) 
-		{
-			// create a canvas element of id visualization.id
-			// add this canvas to div visualizationsContainer
+		function renderBarChart(visualization, data) {
+			// Create a canvas element and add it to div visualizationsContainer
 			addCanvasToContainer(visualization.id);
 
 			// Count the occurrences of data
 			const occurrences = countOccurrences(data);
+			console.log(occurrences)
 
+			// Extract labels and data for the chart
+			const labels = Object.keys(occurrences);
+			const chartData = Object.values(occurrences);
+
+			console.log(labels);
+			console.log(chartData);
 
 			// Get the context of the newly created canvas
 			const ctx = document.getElementById(visualization.id).getContext('2d');
 
 			// Generate a color for each item in the data
-		   const backgroundColors = Object.keys(occurrences).map(() => getRandomColor());
-		   const borderColors = backgroundColors.map(color => color.replace('0.5', '1'));
+			const backgroundColors = labels.map(() => getRandomColor());
+			const borderColors = backgroundColors.map(color => color.replace('0.5', '1'));
 
 			// Create and draw the bar chart using Chart.js
 			const myBarChart = new Chart(ctx, {
 				type: 'bar',
 				data: {
-					labels: Object.keys(occurrences),
+					labels: labels,
 					datasets: [{
-						label: 'Number of Occurrences',
-						data: Object.values(occurrences),
+						label: visualization.title,
+						data: chartData,
 						backgroundColor: backgroundColors,
 						borderColor: borderColors,
 						borderWidth: 1
@@ -172,14 +208,15 @@
 		function countOccurrences(data) {
 			const counts = {};
 			data.forEach(item => {
-				const key = Object.keys(item)[0];
-				if (key) {
-					counts[key] = counts[key] || {};
-					counts[key][item[key]] = (counts[key][item[key]] || 0) + 1;
+				const key = item.product_id;
+				if (!counts[key]) {
+					counts[key] = 0;
 				}
+				counts[key]++;
 			});
 			return counts;
 		}
+
 
 		function addCanvasToContainer(visualizationId) {
 			// Create a new canvas element
@@ -188,13 +225,24 @@
 			// Assign the ID based on the visualization.id
 			canvas.id = visualizationId;
 
-			// Set some basic dimensions (optional, adjust as needed)
-			canvas.width = 400; // example width
-			canvas.height = 300; // example height
+			// Set the size of the canvas drawing area
+			canvas.width = 300;  // Example width
+			canvas.height = 300; // Example height
 
-			// Find the container div by its ID and append the new canvas to it
+			// Set the display size of the canvas via inline styles
+			canvas.style.width = '300px';
+			canvas.style.height = '300px';
+
+			// Create a wrapper div for the canvas
+			const graphDiv = document.createElement('div');
+			graphDiv.classList.add('graph'); // Add the 'graph' class (or whatever class you are using for styling)
+
+			// Append the canvas to the wrapper div
+			graphDiv.appendChild(canvas);
+
+			// Find the container div by its ID and append the wrapper div to it
 			const container = document.getElementById('visualizationsContainer');
-			container.appendChild(canvas);
+			container.appendChild(graphDiv);
 		}
 
 		function getRandomColor() {
@@ -203,7 +251,6 @@
 			const b = Math.floor(Math.random() * 256);
 			return `rgba(${r}, ${g}, ${b}, 0.5)`;
 		}
-	</script>
-</body>
-</html>
+	});
+</script>
 
