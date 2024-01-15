@@ -4,6 +4,7 @@ using DashboardMaker.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DashboardMaker.Controllers
@@ -58,9 +59,13 @@ namespace DashboardMaker.Controllers
 
             if(colorPalette.Id == 0)
             {
-                // create color palette
-                var newColorPalette = new ColorPalette(colorPalette.Name);
-                _context.ColorPalettes.Add(newColorPalette);
+				// create color palette
+				var newColorPalette = new ColorPalette(colorPalette.Name);
+				if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+				{
+					newColorPalette.Owner = _context.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+				}
+				_context.ColorPalettes.Add(newColorPalette);
                 await _context.SaveChangesAsync();
 
                 // fill the rows of the many to many table (ColorColorPalette)

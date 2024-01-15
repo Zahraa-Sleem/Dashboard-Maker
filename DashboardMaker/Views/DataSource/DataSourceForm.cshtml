@@ -155,7 +155,7 @@ else
 	$(document).ready(function () {
 		var connectionString = "@Html.Raw(Model.ConnectionString)";
 		// Decompose the connection string and fill the values if connection string is not null or empty
-		if (connectionString && connectionString !== "@Html.Raw(Model.ConnectionString)") {
+		if (connectionString) {
 			// Decompose the connection string
 			var parts = connectionString.split(';');
 			var host = parts[0].split('=')[1];
@@ -163,6 +163,8 @@ else
 			var user = parts[2].split('=')[1];
 			var password = parts[3].split('=')[1];
 			var database = parts[4].split('=')[1];
+
+			console.log(parts);
 
 			// Populate the form fields
 			document.getElementById("Host").value = host;

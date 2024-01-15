@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DashboardMaker.Models
 {
@@ -7,6 +8,8 @@ namespace DashboardMaker.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public ICollection<ColorColorPalette> ColorPalettes { get; set; }
+        public string OwnerId { get; set; }
+        public IdentityUser Owner { get; set; }
 
         [NotMapped]
         public List<Color> Colors { get; set; }
