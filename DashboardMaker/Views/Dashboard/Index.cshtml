@@ -19,16 +19,14 @@
 
 		#visualizationsContainer {
 			width: 80%;
-			overflow-x: auto; /* Enables horizontal scrolling */
-			white-space: nowrap; /* Keeps all graphs in a single line */
-/*			border: 1px solid red;
-*/		}
+			overflow-x: auto; 
+			white-space: nowrap; 
+		}
 
 		.graph {
 			flex: 0 0 auto; /* Prevents graphs from shrinking */
-			width: 300px; /* Or any other fixed width */
-			margin-right: 10px; /* Spacing between graphs */
-/*			border: 1px solid black;*/
+			width: 300px;
+			margin-right: 10px;
 		}
 	</style>
 </head>
@@ -162,14 +160,10 @@
 
 			// Count the occurrences of data
 			const occurrences = countOccurrences(data);
-			console.log(occurrences)
 
 			// Extract labels and data for the chart
 			const labels = Object.keys(occurrences);
 			const chartData = Object.values(occurrences);
-
-			console.log(labels);
-			console.log(chartData);
 
 			// Get the context of the newly created canvas
 			const ctx = document.getElementById(visualization.id).getContext('2d');
@@ -202,13 +196,60 @@
 		}
 
 		function renderPieChart(visualization, data) {
+			console.log(data);
+			// Create a canvas element and add it to div visualizationsContainer
 			addCanvasToContainer(visualization.id);
+
+			// Count the occurrences of data
+			const occurrences = countOccurrences(data);
+
+			// Extract labels and data for the chart
+			const labels = Object.keys(occurrences);
+			const chartData = Object.values(occurrences);
+
+			console.log(labels);
+			console.log(chartData);
+
+			// Get the context of the newly created canvas
+			const ctx = document.getElementById(visualization.id).getContext('2d');
+
+			// Generate a color for each item in the data
+			const backgroundColors = labels.map(() => getRandomColor());
+
+			// Create and draw the pie chart using Chart.js
+			const myPieChart = new Chart(ctx, {
+				type: 'pie',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: visualization.title,
+						data: chartData,
+						backgroundColor: backgroundColors,
+						borderWidth: 1
+					}]
+				},
+				options: {
+					responsive: true,
+					plugins: {
+						legend: {
+							position: 'top',
+						},
+						title: {
+							display: true,
+							text: visualization.title
+						}
+					}
+				}
+			});
 		}
 
 		function countOccurrences(data) {
 			const counts = {};
 			data.forEach(item => {
-				const key = item.product_id;
+				// Assumes the first property of the object is the key
+				const key = item[Object.keys(item)[0]];
+				if (key === undefined) return; // Skip if the item is empty or doesn't have properties
+
 				if (!counts[key]) {
 					counts[key] = 0;
 				}
@@ -216,6 +257,7 @@
 			});
 			return counts;
 		}
+
 
 
 		function addCanvasToContainer(visualizationId) {
@@ -226,8 +268,8 @@
 			canvas.id = visualizationId;
 
 			// Set the size of the canvas drawing area
-			canvas.width = 300;  // Example width
-			canvas.height = 300; // Example height
+			canvas.width = 300; 
+			canvas.height = 300; 
 
 			// Set the display size of the canvas via inline styles
 			canvas.style.width = '300px';
