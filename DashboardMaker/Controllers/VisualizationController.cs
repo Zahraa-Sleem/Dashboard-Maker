@@ -112,7 +112,11 @@ namespace DashboardMaker.Controllers
 		[HttpGet("GetPalettes")]
 		private async Task<IEnumerable<ColorPaletteViewModel>> GetPalettes()
 		{
+			// Retrieve the user's identifier. This depends on how you authenticate users.
+			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
 			var palettes = await _context.ColorPalettes
+			.Where(palette => palette.OwnerId == userId)
 			.Select(palette => new ColorPaletteViewModel
 			{
 				Id = palette.Id,

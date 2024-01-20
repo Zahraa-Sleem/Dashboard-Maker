@@ -42,7 +42,7 @@
 		</div>
 
 		<div id="visualizationsContainer" class="container-fluid">
-			<div class="flex-row flex-nowrap">
+			<div class="flex-row flex-nowrap" id="innerContainer">
 
 			</div>
 		</div>
@@ -70,6 +70,8 @@
 			const createVisualizationLink = document.getElementById('createVisualizationLink');
 			createVisualizationLink.href = '/Visualization/Create/' + selectedDashboardId;
 			fetchAndDisplayVisualizations(selectedDashboardId);
+			const container = document.getElementById('innerContainer');
+			container.innerHTML = ''
 		});
 
 		function populateDropdown(data) {
@@ -113,7 +115,7 @@
 					return data.map(row => {
 						if (!Array.isArray(row.columns)) {
 							console.error('Row does not contain a Columns array:', row);
-							return {}; // Return an empty object or handle this case as needed
+							return {}; 
 						}
 
 						return row.columns.reduce((obj, column) => {
@@ -124,7 +126,7 @@
 				} else {
 					// Handle other responses like error messages
 					console.error('Response is not in the expected format:', data);
-					return []; // or throw an error, depending on your use case
+					return [];
 				}
 			} catch (error) {
 				console.error('There was a problem with your fetch operation:', error);
@@ -196,7 +198,6 @@
 		}
 
 		function renderPieChart(visualization, data) {
-			console.log(data);
 			// Create a canvas element and add it to div visualizationsContainer
 			addCanvasToContainer(visualization.id);
 
@@ -206,9 +207,6 @@
 			// Extract labels and data for the chart
 			const labels = Object.keys(occurrences);
 			const chartData = Object.values(occurrences);
-
-			console.log(labels);
-			console.log(chartData);
 
 			// Get the context of the newly created canvas
 			const ctx = document.getElementById(visualization.id).getContext('2d');
@@ -277,13 +275,29 @@
 
 			// Create a wrapper div for the canvas
 			const graphDiv = document.createElement('div');
-			graphDiv.classList.add('graph'); // Add the 'graph' class (or whatever class you are using for styling)
+			graphDiv.classList.add('graph');
+			graphDiv.classList.add('col-md-6');
+			//graphDiv.classList.add('col-md-4');
 
 			// Append the canvas to the wrapper div
 			graphDiv.appendChild(canvas);
 
+			// Create a delete button
+			const deleteButton = document.createElement('button');
+			deleteButton.innerText = 'Delete';
+			deleteButton.classList.add('delete-btn');
+			// Set the event listener for the delete button
+			deleteButton.onclick = function () {
+				// to be revisited
+				// Remove the wrapper div from the container
+				graphDiv.remove();
+			};
+
+			// Append the delete button to the wrapper div
+			graphDiv.appendChild(deleteButton);
+
 			// Find the container div by its ID and append the wrapper div to it
-			const container = document.getElementById('visualizationsContainer');
+			const container = document.getElementById('innerContainer');
 			container.appendChild(graphDiv);
 		}
 
