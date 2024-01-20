@@ -19,14 +19,19 @@
 
 		#visualizationsContainer {
 			width: 80%;
-			overflow-x: auto; 
-			white-space: nowrap; 
+/*			overflow-x: auto; */
+/*			white-space: nowrap; */
 		}
 
 		.graph {
-			flex: 0 0 auto; /* Prevents graphs from shrinking */
 			width: 300px;
 			margin-right: 10px;
+		}
+
+		#innerContainer {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 5px;
 		}
 	</style>
 </head>
@@ -42,7 +47,7 @@
 		</div>
 
 		<div id="visualizationsContainer" class="container-fluid">
-			<div class="flex-row flex-nowrap" id="innerContainer">
+			<div id="innerContainer">
 
 			</div>
 		</div>
@@ -276,8 +281,6 @@
 			// Create a wrapper div for the canvas
 			const graphDiv = document.createElement('div');
 			graphDiv.classList.add('graph');
-			graphDiv.classList.add('col-md-6');
-			//graphDiv.classList.add('col-md-4');
 
 			// Append the canvas to the wrapper div
 			graphDiv.appendChild(canvas);
