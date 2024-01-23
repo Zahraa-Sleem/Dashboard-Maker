@@ -7,11 +7,13 @@ using SqlKata.Execution;
 using Microsoft.AspNetCore.Http;
 using DashboardMaker.Data;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DashboardMaker.Controllers
 {
     [Route("DataSource")]
-    public class DataSourceController : Controller
+	[Authorize]
+	public class DataSourceController : Controller
     {
         private readonly ApplicationDbContext _context;
 

@@ -1,6 +1,7 @@
 ﻿using DashboardMaker.Data;
 using DashboardMaker.Models;
 using DashboardMaker.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -10,7 +11,8 @@ using System.Threading.Tasks;
 namespace DashboardMaker.Controllers
 {
     [Route("/ColorPalette")]
-    public class ColorPaletteController : Controller
+	[Authorize]
+	public class ColorPaletteController : Controller
     {
         private readonly ApplicationDbContext _context;
 

@@ -1,6 +1,7 @@
 ﻿using DashboardMaker.Data;
 using DashboardMaker.Models;
 using DashboardMaker.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using System.Security.Claims;
 namespace DashboardMaker.Controllers
 {
 	[Route("Visualization")]
+	[Authorize]
 	public class VisualizationController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -29,8 +31,14 @@ namespace DashboardMaker.Controllers
 			{
 				owner = _context.Users.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id;
 			}
+			var dashboard = _context.Dashboards.Include(o=>o.Owner).FirstOrDefault(dashboard => dashboard.Id == id);
 
-			VisualizationViewModel model = new VisualizationViewModel()
+            if (dashboard != null && dashboard.Owner.Id != owner)
+            {
+                return View("Error403");
+            }
+
+            VisualizationViewModel model = new VisualizationViewModel()
 			{
 				Visualization = new Visualization()
 				{
