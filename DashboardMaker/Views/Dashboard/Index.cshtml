@@ -172,6 +172,7 @@
 			const ctx = document.getElementById(visualization.id).getContext('2d');
 
 			// Generate a color for the line chart
+			// NEED TO BE REVISITED
 			const lineColor = getRandomColor();
 
 			// Create and draw the line chart using Chart.js
@@ -325,18 +326,18 @@
 			graphDiv.appendChild(canvas);
 
 			// Create a delete button
-			const deleteButton = document.createElement('button');
-			deleteButton.innerText = 'Delete';
-			deleteButton.classList.add('delete-btn');
+			const removeForNowForButton = document.createElement('button');
+			removeForNowForButton.innerText = 'Remove For Now';
+			//deleteButton.classList.add('delete-btn');
 			// Set the event listener for the delete button
-			deleteButton.onclick = function () {
+			removeForNowForButton.onclick = function () {
 				// to be revisited
 				// Remove the wrapper div from the container
 				graphDiv.remove();
 			};
 
 			// Append the delete button to the wrapper div
-			graphDiv.appendChild(deleteButton);
+			graphDiv.appendChild(removeForNowForButton);
 
 			// Find the container div by its ID and append the wrapper div to it
 			const container = document.getElementById('innerContainer');
