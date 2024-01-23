@@ -19,8 +19,6 @@
 
 		#visualizationsContainer {
 			width: 80%;
-/*			overflow-x: auto; */
-/*			white-space: nowrap; */
 		}
 
 		.graph {
@@ -159,7 +157,48 @@
 
 		function renderLineChart(visualization, data) {
 			addCanvasToContainer(visualization.id);
+
+			let labels = [];
+			let values = [];
+
+			data.forEach(item => {
+				const keys = Object.keys(item);
+				if (keys.length === 2) {
+					labels.push(item[keys[0]]);
+					values.push(item[keys[1]]);
+				}
+			});
+
+			const ctx = document.getElementById(visualization.id).getContext('2d');
+
+			// Generate a color for the line chart
+			const lineColor = getRandomColor();
+
+			// Create and draw the line chart using Chart.js
+			const myLineChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: visualization.title,
+						data: values,
+						backgroundColor: lineColor,
+						borderColor: lineColor,
+						borderWidth: 1,
+						fill: false // Set fill to false for line chart
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
 		}
+
+
 
 		function renderBarChart(visualization, data) {
 			// Create a canvas element and add it to div visualizationsContainer

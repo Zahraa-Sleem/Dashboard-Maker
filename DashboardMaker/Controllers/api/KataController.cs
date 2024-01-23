@@ -4,6 +4,7 @@ using DashboardMaker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using MySqlConnector;
+using Newtonsoft.Json;
 using SqlKata;
 using SqlKata.Compilers;
 using SqlKata.Execution;
@@ -63,11 +64,11 @@ namespace DashboardMaker.Controllers.api
 			var query = DataSource.DataSourceType == "SQL Database"
 				? db.Query("INFORMATION_SCHEMA.TABLES")
 				.Select("TABLE_NAME")
-				.Where("TABLE_SCHEMA", "=", "dbo") 
+				.Where("TABLE_SCHEMA", "=", "dbo")
 				.Where("TABLE_TYPE", "BASE TABLE")
 			: db.Query("INFORMATION_SCHEMA.TABLES")
 				.Select("TABLE_NAME")
-				.Where("TABLE_SCHEMA", "=", databaseName) 
+				.Where("TABLE_SCHEMA", "=", databaseName)
 				.Where("TABLE_TYPE", "BASE TABLE");
 
 
@@ -199,13 +200,14 @@ namespace DashboardMaker.Controllers.api
 									}
 									results.Add(rowData);
 								}
+								Console.WriteLine(results);
 								return Ok(results);
 							}
 						}
-						catch(Exception ex)
+						catch (Exception ex)
 						{
 							Console.WriteLine(ex.ToString());
-						}		
+						}
 					}
 				}
 				return Ok();
@@ -213,6 +215,73 @@ namespace DashboardMaker.Controllers.api
 			else
 			{
 				return BadRequest("Unsupported data source type.");
+			}
+		}
+		[HttpGet("getColumnsTypes")]
+		public async Task<ActionResult<List<ColumnType>>> GetColumnsTypes(string selectedColumns,int DataSourceId,string TableName)
+		{
+			var columns = JsonConvert.DeserializeObject<List<string>>(selectedColumns);
+			if (columns == null || !columns.Any())
+			{
+				return BadRequest("No columns specified.");
+			}
+
+			var dataSource = await _context.DataSources.FindAsync(DataSourceId);
+			if (dataSource == null)
+			{
+				return NotFound("DataSource not found.");
+			}
+
+			try
+			{
+				var columnTypes = new List<ColumnType>();
+				using (IDbConnection connection = CreateConnection(dataSource))
+				{
+					connection.Open();
+					foreach (var column in columns)
+					{
+						var dbSchema = dataSource.DataSourceType == "SQL Database" ? "dbo" : ExtractDatabaseName(dataSource.ConnectionString);
+						var query = @"SELECT DATA_TYPE 
+                              FROM INFORMATION_SCHEMA.COLUMNS 
+                              WHERE TABLE_NAME = @tableName 
+                              AND COLUMN_NAME = @columnName 
+                              AND TABLE_SCHEMA = @schemaName";
+
+						using (var command = connection.CreateCommand())
+						{
+							command.CommandText = query;
+
+							var tableNameParameter = command.CreateParameter();
+							tableNameParameter.ParameterName = "@tableName";
+							tableNameParameter.Value = TableName;
+							command.Parameters.Add(tableNameParameter);
+
+							var columnNameParameter = command.CreateParameter();
+							columnNameParameter.ParameterName = "@columnName";
+							columnNameParameter.Value = column;
+							command.Parameters.Add(columnNameParameter);
+
+							var schemaNameParameter = command.CreateParameter();
+							schemaNameParameter.ParameterName = "@schemaName";
+							schemaNameParameter.Value = dbSchema;
+							command.Parameters.Add(schemaNameParameter);
+
+							var dataType =  command.ExecuteScalar() as string;
+							columnTypes.Add(new ColumnType
+							{
+								ColumnName = column,
+								DataType = dataType
+							});
+						}
+					}
+				}
+
+				return Ok(columnTypes);
+			}
+			catch (Exception ex)
+			{
+				// Log the exception
+				return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
 			}
 		}
 
@@ -227,6 +296,15 @@ namespace DashboardMaker.Controllers.api
 			};
 		}
 
+		private string ExtractDatabaseName(string connectionString)
+		{
+			var databaseNameKeyValue = connectionString
+				.Split(';')
+				.Select(part => part.Split('='))
+				.FirstOrDefault(part => part[0].Equals("Database", StringComparison.OrdinalIgnoreCase));
+
+			return databaseNameKeyValue?.Length == 2 ? databaseNameKeyValue[1] : null;
+		}
 
 		private IDbCommand CreateCommand(IDbConnection connection, string tableName, string schemaName)
 		{
@@ -269,6 +347,19 @@ namespace DashboardMaker.Controllers.api
 		{
 			public string ColumnName { get; set; }
 			public string Value { get; set; }
+		}
+
+		public class ColumnsRequest
+		{
+			public List<string> Columns { get; set; }
+			public int DataSourceId { get; set; }
+			public string TableName { get; set; }
+		}
+
+		public class ColumnType
+		{
+			public string ColumnName { get; set; }
+			public string DataType { get; set; }
 		}
 	}
 }

@@ -142,6 +142,8 @@
 
 			// Show tables if the selected source is a database whether sql or mysql
 			$('#dataSourceSelect').change(function () {
+				$('#tables').empty();
+				$("#tables").chosen("destroy");
 				var selectedValue = $(this).val();
 				var selectedDataSource = DataSources.find(ds => ds.id == selectedValue);
 				$('#tablesDiv').css('display', 'none');
@@ -156,6 +158,12 @@
 						type: 'GET',
 						data: { dataSourceId: selectedValue },
 						success: function (tables) {
+							$('#tables').append($('<option>', {
+								value: null,
+								text: 'Choose a table',
+								selected: true,
+								disabled: true
+							}));
 							tables.forEach(function (table) {
 								$('#tables').append($('<option>', {
 									value: table,
@@ -166,6 +174,7 @@
 									text: table
 								}));
 							});
+							$("#tables").chosen({ width: '100%', search_contains: true })
 						}
 					});
 				}
@@ -197,25 +206,122 @@
 				return $('#columnsInitialSelect').find('option:selected').length;
 			}
 
-			// Function to validate the selection based on the chart type
-			function validateColumnSelection() {
-				var selectedChartType = $('#visualizationTypeSelect').val(); 
-				var selectedColumnCount = countSelectedColumns();
+			function getSelectedColumnValues() {
+				// This will retrieve an array of selected option values
+				var selectedValues = $('#columnsInitialSelect').find('option:selected').map(function () {
+					return this.value;
+				}).get();
 
-				// Check if the selected chart type is 'Line Chart'
-				if (selectedChartType == 2) {
-					if (selectedColumnCount !== 2) {
-						alert("Please select exactly 2 columns for a Line Chart.");
-						return false;
-					}
-				} else {
-					if (selectedColumnCount !== 1) {
-						alert("Please select only 1 column for this chart type.");
-						return false;
-					}
-				}
-				return true;
+				return selectedValues;
 			}
+
+			//function validateColumnSelection() {
+			//	var selectedChartType = $('#visualizationTypeSelect').val();
+			//	var selectedColumnCount = countSelectedColumns();
+			//	var selectedColumns = getSelectedColumnValues();
+
+			//	// Check if the selected chart type is 'Line Chart'
+			//	if (selectedChartType == 2) {
+			//		if (selectedColumnCount !== 2) {
+			//			alert("Please select exactly 2 columns for a Line Chart.");
+			//			return false;
+			//		}
+			//		else {
+			//			var selectedDataSourceId = $('#dataSourceSelect').val();
+			//			var selectedTable = $('#tables').val();
+			//			// Fetch the data types of the selected columns
+			//			$.ajax({
+			//				url: '/api/Kata/getColumnsTypes',
+			//				method: 'Get',
+			//				contentType: 'application/json',
+			//				data: {
+			//					selectedColumns: JSON.stringify(selectedColumns),
+			//					DataSourceId: selectedDataSourceId,
+			//					TableName: selectedTable
+			//				},
+			//				success: function (data) {
+			//					// Assuming 'data' is an array of objects with column types
+			//					// e.g., [{ columnType: 'int' }, { columnType: 'string' }]
+			//					const hasNumericColumn = data.some(column => ['int', 'decimal', 'float'].includes(column.dataType));
+
+			//					if (!hasNumericColumn) {
+			//						alert("Please ensure one of the selected columns is numerical (int, double, etc) for a Line Chart.");
+			//						return false;
+			//					}
+			//					return true;
+			//				},
+			//				error: function (xhr, status, error) {
+			//					console.error('Error fetching column types:', error);
+			//					alert("error fetching");
+			//					return false;
+			//				}
+			//			});
+
+			//		}
+			//	}
+			//	else {
+			//		if (selectedColumnCount !== 1) {
+			//			alert("Please select only 1 column for bar charts and pie charts.");
+			//			return false;
+			//		}
+			//		return true;
+			//	}
+			//	return false;
+			//}
+
+			//// Function to validate the selection based on the chart type
+			function validateColumnSelection() {
+				return new Promise((resolve, reject) => {
+					var selectedChartType = $('#visualizationTypeSelect').val();
+					var selectedColumnCount = countSelectedColumns();
+					var selectedColumns = getSelectedColumnValues();
+
+					if (selectedChartType == 2) {
+						if (selectedColumnCount !== 2) {
+							alert("Please select exactly 2 columns for a Line Chart.");
+							console.log("3");
+							reject(false);
+						} else {
+							var selectedDataSourceId = $('#dataSourceSelect').val();
+							var selectedTable = $('#tables').val();
+
+							$.ajax({
+								url: '/api/Kata/getColumnsTypes',
+								method: 'GET',
+								contentType: 'application/json',
+								data: {
+									selectedColumns: JSON.stringify(selectedColumns),
+									DataSourceId: selectedDataSourceId,
+									TableName: selectedTable
+								},
+								success: function (data) {
+									const hasNumericColumn = data.some(column => ['int', 'decimal', 'float'].includes(column.dataType));
+
+									if (!hasNumericColumn) {
+										alert("Please ensure one of the selected columns is numerical (int, double, etc) for a Line Chart.");
+										reject(false);
+									} else {
+										resolve(true);
+									}
+								},
+								error: function (xhr, status, error) {
+									console.error('Error fetching column types:', error);
+									alert("error fetching");
+									reject(false);
+								}
+							});
+						}
+					} else {
+						if (selectedColumnCount !== 1) {
+							alert("Please select only 1 column for bar charts and pie charts.");
+							reject(false);
+						} else {
+							resolve(true);
+						}
+					}
+				});
+			}
+
 
 			// Function to gather data and save as JSON
 			function saveSelectedTableAndColumns() {
@@ -233,6 +339,7 @@
 				// Assign this JSON string to the hidden input field
 				$('#selectedTableAndColumns').val(json);
 			}
+
 			$('#submit').click(function (e) {
 				if (!validateColumnSelection()) {
 					e.preventDefault(); // Prevent form submission if validation fails
