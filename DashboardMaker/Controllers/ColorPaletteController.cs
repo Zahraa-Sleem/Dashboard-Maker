@@ -102,16 +102,6 @@ namespace DashboardMaker.Controllers
 
                     // get the elements added
                     var added=colorsArray.Except(oldcolors);
-                    Console.WriteLine("added");
-                    foreach(var add in added)
-                    {
-                        Console.WriteLine(add);
-                    }
-                    Console.WriteLine("initial");
-                    foreach (var add in colorsArray)
-                    {
-                        Console.WriteLine(add);
-                    }
                     foreach (var color in added)
                     {
                         _context.ColorColorPalettes.Add(new ColorColorPalette(color, colorPalette.Id));      
@@ -123,8 +113,7 @@ namespace DashboardMaker.Controllers
                     return NotFound();
                 }
             }
-            // we will not reach here
-            return View("ColorPaletteForm", colorPalette);
+            return RedirectToAction(nameof(Index),"Dashboard");
         }
     }
 }
