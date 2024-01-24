@@ -349,13 +349,6 @@ namespace DashboardMaker.Controllers.api
 			public string Value { get; set; }
 		}
 
-		public class ColumnsRequest
-		{
-			public List<string> Columns { get; set; }
-			public int DataSourceId { get; set; }
-			public string TableName { get; set; }
-		}
-
 		public class ColumnType
 		{
 			public string ColumnName { get; set; }

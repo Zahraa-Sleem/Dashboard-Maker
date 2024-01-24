@@ -36,5 +36,21 @@ namespace DashboardMaker.Controllers.api
 			return Ok(visualizations);
 		}
 
+		[HttpPost("deleteVisualization/{visualizationId}")]
+		public async Task<IActionResult> DeleteVisualization(int visualizationId)
+		{
+			var visualization = await _context.Visualizations.FindAsync(visualizationId);
+			if (visualization == null)
+			{
+				return NotFound();
+			}
+
+			_context.Visualizations.Remove(visualization);
+			await _context.SaveChangesAsync();
+
+			return NoContent(); // 204 No Content is a typical response for a successful delete
+		}
 	}
+
+
 }

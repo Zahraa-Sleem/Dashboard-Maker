@@ -330,19 +330,50 @@
 			// Append the canvas to the wrapper div
 			graphDiv.appendChild(canvas);
 
-			// Create a delete button
+			// Create a remove for now button
 			const removeForNowForButton = document.createElement('button');
-			removeForNowForButton.innerText = 'Remove For Now';
-			//deleteButton.classList.add('delete-btn');
+			removeForNowForButton.innerHTML = '<i class="fas fa-eye-slash"></i>'; // Using innerHTML to include the FontAwesome icon
+			removeForNowForButton.classList.add('btn', 'btn-secondary'); // Add Bootstrap classes for styling (optional)
 			// Set the event listener for the delete button
 			removeForNowForButton.onclick = function () {
-				// to be revisited
 				// Remove the wrapper div from the container
 				graphDiv.remove();
 			};
-
 			// Append the delete button to the wrapper div
 			graphDiv.appendChild(removeForNowForButton);
+
+
+			// Create a delete button
+			const deleteButton = document.createElement('button');
+			deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+			deleteButton.classList.add('btn', 'btn-danger');
+
+			// Set the event listener for the delete button
+			deleteButton.onclick = (function (vId) {
+				return function () {
+					fetch(`/api/Visualization/deleteVisualization/${vId}`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						}
+					})
+						.then(response => {
+							if (response.ok) {
+								// If the API call was successful, remove the graphDiv from the UI
+								graphDiv.remove();
+							} else {
+								// Handle the error case
+								console.error('API call failed with status ', response.status);
+							}
+						})
+						.catch(error => {
+							// Handle any network errors
+							console.error('Network error while calling API: ', error);
+						});
+				};
+			})(visualizationId); // Pass visualizationId here
+
+			graphDiv.appendChild(deleteButton);
 
 			// Find the container div by its ID and append the wrapper div to it
 			const container = document.getElementById('innerContainer');
